@@ -42,5 +42,27 @@ $background: #20283e;
   }
   &__name {
     padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+  }
+  &__title {
+    color: $grey-50;
+  }
+  &__suggest {
+    display: flex;
+    color: $primary-400;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

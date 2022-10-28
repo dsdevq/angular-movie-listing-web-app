@@ -16,7 +16,7 @@ export const moviesReducer = createReducer(
   // Handle successfully loaded movies
   on(loadMoviesSucc, (state, { movies }) => ({
     ...state,
-    movies,
+    movies: [...state.movies, ...movies],
     error: null,
     status: EStatuses.SUCC,
   })),

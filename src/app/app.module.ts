@@ -35,6 +35,9 @@ import { IAppState } from './shared/interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { LoaderComponent } from './components/loader/loader.component';
+import { ButtonComponent } from './components/button/button.component';
+import { SuggestMeComponent } from './pages/suggest-me/suggest-me.component';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,9 @@ import { LoaderComponent } from './components/loader/loader.component';
     UrlPipe,
     TypePipe,
     FilterPipe,
+    ButtonComponent,
+    SuggestMeComponent,
+    MovieListComponent,
   ],
   imports: [
     BrowserModule,

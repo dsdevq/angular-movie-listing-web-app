@@ -1,0 +1,22 @@
+@import "../../../variables";
+
+.about-suggest__heading {
+  margin-bottom: 16px !important;
+}
+
+.button__box {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+:host::ng-deep.search {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  :first-child {
+    grid-column: 1/4;
+  }
+  margin-bottom: 80px;
+  align-items: center;
+}

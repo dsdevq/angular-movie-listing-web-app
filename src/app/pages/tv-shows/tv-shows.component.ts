@@ -22,4 +22,7 @@ export class TvShowsComponent implements OnInit {
   private initTvShows(): void {
     this.store.dispatch(loadTvShows());
   }
+  public handleClick(): void {
+    this.store.dispatch(loadTvShows());
+  }
 }

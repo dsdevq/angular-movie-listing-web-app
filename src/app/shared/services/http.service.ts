@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { ENavItems, IAppState, IMovieDetails } from '../interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { IMovie, IMovieData } from '../interface';
 import { selectAllMovies } from '../../state/movies/movies.selectors';
 import { selectAllTvShows } from '../../state/tv-shows/tv-shows.selectors';
@@ -18,6 +18,10 @@ export class HttpService {
   private BACKGROUND_WIDTH: number = 1280;
   private ENavItem = ENavItems;
 
+  // !!!!!!
+  private moviePage = 1;
+  private tvShowsPage = 1;
+
   constructor(private http: HttpClient, private store: Store<IAppState>) {}
 
   private getImage = (width: number = 500, url: string) =>
@@ -25,8 +29,13 @@ export class HttpService {
 
   public getMovies = (): Observable<IMovie[]> =>
     this.http
-      .get<IMovieData>(`${this.BASE_URL}/discover/movie?&api_key=${this.KEY}`)
+      .get<IMovieData>(
+        `${this.BASE_URL}/discover/movie?&api_key=${this.KEY}&page=${this.moviePage}`
+      )
       .pipe(
+        tap(() => {
+          this.moviePage += 1;
+        }),
         map((result) =>
           result.results.map((movie) => ({
             ...movie,
@@ -38,8 +47,13 @@ export class HttpService {
 
   public getTvShows = (): Observable<IMovie[]> =>
     this.http
-      .get<IMovieData>(`${this.BASE_URL}/tv/top_rated?&api_key=${this.KEY}`)
+      .get<IMovieData>(
+        `${this.BASE_URL}/tv/top_rated?&api_key=${this.KEY}&page=${this.tvShowsPage}`
+      )
       .pipe(
+        tap(() => {
+          this.tvShowsPage += 1;
+        }),
         map((result) =>
           result.results.map((tv) => ({
             ...tv,

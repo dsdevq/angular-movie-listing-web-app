@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IMovie } from 'src/app/shared/interface';
 
 @Component({
@@ -9,8 +8,8 @@ import { IMovie } from 'src/app/shared/interface';
 })
 export class MovieComponent implements OnInit {
   @Input() public movieProps: IMovie;
+  @Input() public isSuggest: boolean;
   public link: string;
-  public inputField: FormGroup;
 
   constructor() {}
 

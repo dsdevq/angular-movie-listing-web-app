@@ -1,0 +1,22 @@
+<section class="suggest">
+  <div class="suggest__container">
+    <header class="suggest__header header-suggest">
+      <section class="header-suggest__about about-suggest">
+        <h1 class="about-suggest__heading">Suggest me</h1>
+        <p class="about-suggest__description">I will really appericiate it if you take time to suggest me something good
+          <br> to
+          watch.
+        </p>
+        <form class="search">
+          <app-input></app-input>
+          <app-button>Search</app-button>
+        </form>
+      </section>
+    </header>
+    <app-movie-list [movies]="movies$ | async">
+    </app-movie-list>
+    <!-- <div class="button__box">
+      <app-button class="load-button">Suggest Manually</app-button>
+    </div> -->
+  </div>
+</section>

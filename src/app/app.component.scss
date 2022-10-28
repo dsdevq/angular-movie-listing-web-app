@@ -1,0 +1,18 @@
+@import "../variables";
+.sidenav {
+  background-color: inherit;
+  &__sidenav {
+    position: fixed;
+    top: 75px;
+    background-color: lighten($color: $backgroundColor, $amount: 10%);
+    ::ng-deep.mat-drawer-inner-container {
+      min-width: 200px;
+      > a {
+        display: block;
+      }
+    }
+  }
+  &__link {
+    padding: 12px 0;
+  }
+}

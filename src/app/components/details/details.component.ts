@@ -4,7 +4,12 @@ import {
 } from './../../state/selected/selected.selectors';
 import { loadSelect } from './../../state/selected/selected.actions';
 import { Store } from '@ngrx/store';
-import { IAppState, IMovieDetails, EStatuses } from './../../shared/interface';
+import {
+  IAppState,
+  IMovieDetails,
+  EStatuses,
+  EMovieTypes,
+} from './../../shared/interface';
 import { HttpService } from '../../shared/services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -21,6 +26,7 @@ export class DetailsComponent implements OnInit {
 
   public status$: Observable<string> = this.store.select(getSelectStatus);
   public EStatus = EStatuses;
+  public EMovieType = EMovieTypes;
 
   constructor(
     public http: HttpService,

@@ -1,6 +1,6 @@
 import { debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
 import { IMovie } from 'src/app/shared/interface';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class PageComponent implements OnInit {
   @Input() heading: string;
   @Input() movies: IMovie[];
+  @Output() loadMore = new EventEmitter<void>();
   public inputValue: FormGroup;
   public value$: Observable<string>;
   constructor(private fb: FormBuilder) {}
@@ -27,5 +28,8 @@ export class PageComponent implements OnInit {
       debounceTime(300),
       map((e: FormControl) => e.value)
     );
+  }
+  public handleClick(): void {
+    this.loadMore.emit();
   }
 }

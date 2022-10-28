@@ -40,6 +40,10 @@ export enum ENavItems {
   TV_SHOWS = 'TV Shows',
   ALL = 'All',
 }
+export enum EMovieTypes {
+  MOVIE = 'movie',
+  TV = 'tv',
+}
 
 // export interface IMovieDetails {
 //   id: number;

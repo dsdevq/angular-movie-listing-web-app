@@ -1,5 +1,5 @@
-<section class="home" *ngIf="movies$ | async as movies">
-  <div class="home__container" *ngIf="movies | filter:(value$ | async) || '' as moviesFiltered">
+<section class="home">
+  <div class="home__container" *ngIf="movies$ | async as movies">
     <header class="home__header header-home">
       <section class="header-home__about about-home">
         <h1 class="about-home__heading">MaileHereko</h1>
@@ -10,29 +10,34 @@
           <app-input formControlName="value"></app-input>
         </form>
       </section>
-      <mat-tab-group (selectedTabChange)="handleTabChange($event)" class="header-home__tabs" animationDuration="0ms">
+      <mat-tab-group *ngIf="(movies | filter:(value$ | async) || '') as filtered"
+        (selectedTabChange)="handleTabChange($event)" class="header-home__tabs" animationDuration="0ms">
         <mat-tab [label]="ENavItem.ALL">
           <span>
             {{ENavItem.ALL}}
           </span>
-          ({{moviesFiltered.length}})
+          ({{filtered.length}})
         </mat-tab>
         <mat-tab [label]="ENavItem.MOVIES">
           <span>
             {{ENavItem.MOVIES}}
           </span>
-          ({{moviesFiltered.length}})
+          ({{filtered.length}})
         </mat-tab>
         <mat-tab [label]="ENavItem.TV_SHOWS">
           <span>
             {{ENavItem.TV_SHOWS}}
           </span>
-          ({{moviesFiltered.length}})
+          ({{filtered.length}})
         </mat-tab>
       </mat-tab-group>
     </header>
-    <section class="movie-list">
-      <app-movie *ngFor="let item of moviesFiltered" [movieProps]="item"></app-movie>
-    </section>
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-movie-list [movies]="movies | filter:(value$ | async) || '' "></app-movie-list>
+
+    </ng-container>
+    <div class="button__box">
+      <app-button class="load-button" (click)="handleClick()">Load More</app-button>
+    </div>
   </div>
 </section>

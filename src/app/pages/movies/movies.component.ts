@@ -20,4 +20,7 @@ export class MoviesComponent implements OnInit {
   private initMovies(): void {
     this.store.dispatch(loadMovies());
   }
+  public handleClick(): void {
+    this.store.dispatch(loadMovies());
+  }
 }

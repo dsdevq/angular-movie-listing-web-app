@@ -1,3 +1,4 @@
+import { SuggestMeComponent } from './pages/suggest-me/suggest-me.component';
 import { DetailsComponent } from './components/details/details.component';
 import { TvShowsComponent } from './pages/tv-shows/tv-shows.component';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'movies', component: MoviesComponent },
   { path: 'tv-shows', component: TvShowsComponent },
   { path: ':movie|tv/:id', component: DetailsComponent },
+  { path: 'suggest-me', component: SuggestMeComponent },
   {
     path: ':movies|tvs/:movie|tv/:id',
     redirectTo: ':movie|tv/:id',
