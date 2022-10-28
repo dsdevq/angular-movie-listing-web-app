@@ -1,0 +1,53 @@
+@import "../../../variables";
+.header-home {
+  &__tabs {
+    max-width: fit-content !important;
+    .mat-tab-header {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(40px);
+      padding: 8px;
+      border-radius: 12px;
+      margin-top: 70px;
+      margin-bottom: 24px;
+    }
+    .mat-tab-body-wrapper {
+      color: $grey-400;
+      margin-bottom: 24px;
+      span {
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: -0.02em;
+      }
+    }
+  }
+}
+.about-home {
+  &__heading {
+    margin-bottom: 16px !important;
+  }
+}
+
+// ---------
+.mat-tab-label-content {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.mat-focus-indicator {
+  color: $primary-50 !important;
+}
+
+/* Styles for the ink bar */
+.mat-ink-bar {
+  height: 100% !important;
+  border-radius: 8px;
+  position: absolute;
+  z-index: -1;
+}
+
+.mat-tab-label {
+  min-width: 25px !important;
+  padding: 8px 32px !important;
+}

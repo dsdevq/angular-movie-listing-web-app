@@ -1,0 +1,16 @@
+<mat-card class="card" *ngIf="movieProps">
+  <div class="card__image">
+    <a [routerLink]="link">
+      <img mat-card-image width="100%" height="100%" [src]="movieProps.poster_path"
+        [alt]="movieProps.title || movieProps.name">
+    </a>
+    <app-rating class="card__rating">
+      {{movieProps.vote_average}}
+    </app-rating>
+  </div>
+  <mat-card-content>
+    <p class="card__name">
+      {{movieProps.title || movieProps.name}}
+    </p>
+  </mat-card-content>
+</mat-card>
