@@ -1,0 +1,134 @@
+@import "../../../variables";
+.details {
+  margin-top: 40px;
+  padding-bottom: 150px;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 152px;
+    @media (max-width: 768px) {
+      gap: 100px;
+    }
+  }
+  &__image {
+    position: relative;
+  }
+  &__content {
+    display: flex;
+    justify-content: center;
+    margin-left: 80px;
+    margin-right: 80px;
+    gap: 80px;
+    @media (max-width: 768px) {
+      margin: 0;
+      gap: 20px;
+    }
+    @media (max-width: 510px) {
+      margin: 0;
+      flex-wrap: wrap-reverse;
+      gap: 40px;
+      > * {
+        flex: 1 1 100%;
+      }
+    }
+  }
+}
+.background-image {
+  &__image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    max-height: 480px;
+    border-radius: 40px;
+  }
+  &__label {
+    left: 6.7%;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%);
+    max-width: 560px;
+    width: 100%;
+    padding: 40px;
+    background: rgba(32, 40, 62, 0.8);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    @media (max-width: 768px) {
+      left: 0;
+      padding: 20px;
+    }
+  }
+  &__link {
+    font-size: 12px;
+    line-height: 16px;
+    color: $primary-200;
+  }
+  &__header {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+    color: $grey-50;
+  }
+}
+.content-details {
+  &__poster {
+    flex: 0 1 50%;
+    img {
+      max-width: 480px;
+      object-fit: cover;
+      width: 100%;
+      max-height: 720px;
+      border-radius: 24px;
+    }
+  }
+  &__information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 0 1 50%;
+    gap: 24px;
+  }
+}
+.information-box {
+  &__overview {
+    color: $grey-50;
+  }
+  &__description {
+    color: $grey-300;
+  }
+}
+.information-box {
+  &__additional-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    gap: inherit;
+  }
+}
+.info-add {
+  &__box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    h5 {
+      font-size: 16px;
+      line-height: 24px;
+      color: $grey-400;
+      font-weight: 400;
+    }
+    p {
+      font-size: 20px;
+      line-height: 32px;
+      color: $grey-100;
+    }
+  }
+}
+
+.tv {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(45%, 100%), 1fr));
+  :last-child {
+    grid-column: 1/3;
+  }
+}
