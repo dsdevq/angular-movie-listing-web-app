@@ -50,4 +50,12 @@
 .mat-tab-label {
   min-width: 25px !important;
   padding: 8px 32px !important;
+  @media (max-width: 480px) {
+    padding: 8px 25px !important;
+  }
+}
+.button__box {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
 }

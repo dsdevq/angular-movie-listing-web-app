@@ -2,10 +2,12 @@ import { Store } from '@ngrx/store';
 import { ENavItems, IAppState, IMovieDetails } from '../interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { IMovie, IMovieData } from '../interface';
-import { selectAllMovies } from '../../state/movies/movies.selectors';
 import { selectAllTvShows } from '../../state/tv-shows/tv-shows.selectors';
+import { loadTvShows } from 'src/app/state/tv-shows/tv-shows.actions';
+import { loadMovies } from 'src/app/state/movies/movies.actions';
+import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,10 @@ export class HttpService {
   private BACKGROUND_WIDTH: number = 1280;
   private ENavItem = ENavItems;
 
+  // !!!!!!
+  private moviePage = 1;
+  private tvShowsPage = 1;
+
   constructor(private http: HttpClient, private store: Store<IAppState>) {}
 
   private getImage = (width: number = 500, url: string) =>
@@ -25,11 +31,17 @@ export class HttpService {
 
   public getMovies = (): Observable<IMovie[]> =>
     this.http
-      .get<IMovieData>(`${this.BASE_URL}/discover/movie?&api_key=${this.KEY}`)
+      .get<IMovieData>(
+        `${this.BASE_URL}/discover/movie?&api_key=${this.KEY}&page=${this.moviePage}`
+      )
       .pipe(
+        tap(() => {
+          this.moviePage += 1;
+        }),
         map((result) =>
           result.results.map((movie) => ({
             ...movie,
+            suggested: false,
             type: 'movie',
             poster_path: this.getImage(this.POSTER_WIDTH, movie.poster_path),
           }))
@@ -38,12 +50,18 @@ export class HttpService {
 
   public getTvShows = (): Observable<IMovie[]> =>
     this.http
-      .get<IMovieData>(`${this.BASE_URL}/tv/top_rated?&api_key=${this.KEY}`)
+      .get<IMovieData>(
+        `${this.BASE_URL}/tv/top_rated?&api_key=${this.KEY}&page=${this.tvShowsPage}`
+      )
       .pipe(
+        tap(() => {
+          this.tvShowsPage += 1;
+        }),
         map((result) =>
           result.results.map((tv) => ({
             ...tv,
             title: tv.name,
+            suggested: false,
             type: 'tv',
             poster_path: this.getImage(this.POSTER_WIDTH, tv.poster_path),
           }))
@@ -69,14 +87,14 @@ export class HttpService {
     if (value === this.ENavItem.TV_SHOWS) {
       return this.store.select(selectAllTvShows);
     }
-    return this.store
-      .select(selectAllMovies)
-      .pipe(
-        switchMap((movies) =>
-          this.store
-            .select(selectAllTvShows)
-            .pipe(map((tvShows) => [...movies, ...tvShows]))
+    return this.store.select(selectAllMovies).pipe(
+      tap((e) => !e.length && this.store.dispatch(loadMovies())),
+      switchMap((movies) =>
+        this.store.select(selectAllTvShows).pipe(
+          tap((e) => !e.length && this.store.dispatch(loadTvShows())),
+          map((tvShows) => [...movies, ...tvShows])
         )
-      );
+      )
+    );
   }
 }

@@ -21,7 +21,7 @@ export const tvShowsReducer = createReducer(
   // Handle successfully loaded tvShows
   on(loadTvShowsSucc, (state, { tvShows }) => ({
     ...state,
-    tvShows,
+    tvShows: [...state.tvShows, ...tvShows],
     error: null,
     status: EStatuses.SUCC,
   })),

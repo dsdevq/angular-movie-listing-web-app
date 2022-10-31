@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState, IMovie } from 'src/app/shared/interface';
 import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -11,13 +11,20 @@ import { Observable } from 'rxjs';
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent implements OnInit {
-  public moviesInfo$: Observable<IMovie[]> = this.store.select(selectAllMovies);
+  public moviesInfo$: Observable<IMovie[]>;
   constructor(private store: Store<IAppState>) {}
 
   ngOnInit(): void {
     this.initMovies();
   }
   private initMovies(): void {
+    this.moviesInfo$ = this.store
+      .select(selectAllMovies)
+      .pipe(
+        tap((movies) => !movies.length && this.store.dispatch(loadMovies()))
+      );
+  }
+  public handleClick(): void {
     this.store.dispatch(loadMovies());
   }
 }

@@ -4,10 +4,14 @@
       <a routerLink="/">
         <mat-icon class="header__logo" svgIcon="logo"></mat-icon>
       </a>
+      <button mat-button class="header__button" (click)="toggleSidenav()">
+        <mat-icon>{{ isMenuOpen && 'menu_open' || 'menu' }}</mat-icon>
+      </button>
       <ul class="menu__list">
         <li class="menu__item" *ngFor="let link of list">
           <a [routerLink]="link | url" class="menu__link">
             {{link}}
+            <!-- !!! -->
             <mat-icon *ngIf="link === 'Suggest me'">arrow_forward</mat-icon>
           </a>
         </li>

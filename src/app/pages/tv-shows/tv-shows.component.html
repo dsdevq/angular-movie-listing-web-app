@@ -1,2 +1,2 @@
-<app-page *ngIf="tvShowsInfo$ | async as tvShows" [movies]="tvShows" heading="TV Shows">
+<app-page *ngIf="tvShowsInfo$ | async as tvShows" (loadMore)="handleClick()" [movies]="tvShows" heading="TV Shows">
 </app-page>

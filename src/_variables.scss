@@ -6,6 +6,7 @@ $backgroundColor: #121829;
 $app-purple: mat-palette($mat-deep-purple);
 $app-grey: mat-palette($mat-grey);
 $app-warn: mat-palette($mat-orange);
+$app-green: mat-palette($mat-green);
 
 // Create your Sass color vars (will be available in all the project)
 $primary-50: mat-color($app-purple, 50);
@@ -16,6 +17,16 @@ $primary-400: mat-color($app-purple, 400);
 $primary-500: mat-color($app-purple, 500);
 $primary-600: mat-color($app-purple, 600);
 $primary-700: mat-color($app-purple, 700);
+
+// Success
+$success-50: mat-color($app-green, 50);
+$success-100: mat-color($app-green, 100);
+$success-200: mat-color($app-green, 200);
+$success-300: mat-color($app-green, 300);
+$success-400: mat-color($app-green, 400);
+$success-500: mat-color($app-green, 500);
+$success-600: mat-color($app-green, 600);
+$success-700: mat-color($app-green, 700);
 
 $grey-50: mat-color($app-grey, 50);
 $grey-100: mat-color($app-grey, 100);

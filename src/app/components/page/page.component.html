@@ -1,6 +1,5 @@
 <section class="page">
-  <!-- !!!!!! -->
-  <div class="page__container" *ngIf="movies | filter:(value$ | async) || '' as filtered; else loader">
+  <div class="page__container">
     <header class="page__header header-page">
       <section class="header-page__about about-page">
         <a href="/">MaileHereko</a>
@@ -9,15 +8,17 @@
       <form [formGroup]="inputValue">
         <app-input formControlName="value"></app-input>
       </form>
-      <p class="about-page__stats">{{filtered.length}} items</p>
+      <p class="about-page__stats">{{(movies | filter:(value$ | async) || '')?.length}} items</p>
     </header>
     <ng-container>
-      <section class="movie-list">
-        <app-movie *ngFor="let item of filtered " [movieProps]="item"></app-movie>
-      </section>
+      <app-movie-list *ngIf="movies | filter:(value$ | async) || '' as filtered; else loader" [movies]="filtered">
+      </app-movie-list>
     </ng-container>
+    <ng-template #loader>
+      <app-loader></app-loader>
+    </ng-template>
+    <div class="button__box">
+      <app-button class="load-button" (click)="handleClick()">Load More</app-button>
+    </div>
   </div>
-  <ng-template #loader>
-    <app-loader></app-loader>
-  </ng-template>
 </section>

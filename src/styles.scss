@@ -66,6 +66,19 @@ body {
   }
 }
 
+[class*="__link"] {
+  color: $grey-400;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  &:hover {
+    color: $primary-400;
+  }
+}
+
 [class^="about-"] {
   &[class$="__heading"] {
     font-weight: 600;
@@ -74,6 +87,9 @@ body {
     letter-spacing: -0.02em;
     color: $grey-50;
     margin: 0 0 24px 0;
+    @media (max-width: 480px) {
+      font-size: 50px;
+    }
   }
   &[class$="__description"] {
     font-size: 16px;
@@ -82,22 +98,9 @@ body {
     margin: 0 0 24px 0;
   }
   &[class$="__stats"] {
-    margin-top: 28px;
+    margin-top: 48px;
     margin-bottom: 24px;
     font-size: 16px;
     color: $grey-400;
-  }
-}
-.movie-list {
-  display: grid;
-  row-gap: 20px;
-  column-gap: 24px;
-  padding-bottom: 150px;
-  // grid-template-columns: repeat(auto-fit, minmax(min(225px, 100%), 1fr));
-  grid-template-columns: repeat(4, 1fr);
-  @media (max-width: 768px) {
-    column-gap: 20px;
-    justify-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
   }
 }

@@ -15,7 +15,13 @@ export class SelectEffects {
         this.http.getItem(data.url).pipe(
           // Take the returned value and return a new success action containing movies
           map((item) =>
-            loadSelectSucc({ selected: { ...item, type: data.itemType } })
+            loadSelectSucc({
+              selected: {
+                ...item,
+                type: data.itemType,
+                title: item.name || item.title,
+              },
+            })
           ),
           // Or... if it errors return a new failure action containing the error
           catchError((error) => of(loadSelectFail({ error })))

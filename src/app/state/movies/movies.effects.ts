@@ -14,7 +14,7 @@ export class MovieEffects {
         // Call the getMovies method, it returns an observable
         this.http.getMovies().pipe(
           // Take the returned value and return a new success action containing movies
-          map((movies) => loadMoviesSucc({ movies: movies })),
+          map((movies) => loadMoviesSucc({ movies })),
           // Or... if it errors return a new failure action containing the error
           catchError((error) => of(loadMoviesFail({ error })))
         )
