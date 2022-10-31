@@ -24,48 +24,6 @@
           <app-rating>{{item.vote_average| number: '1.1-1'}}</app-rating>
         </div>
         <!-- !!!!!!! -->
-        <!-- <div [ngClass]="{'tv': item.type === 'tv'}" class="information-box__additional-info info-add">
-          <div class="info-add__box">
-            <h5>Type</h5>
-            <p>{{item.type | type: 1}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.status && item.type === 'tv'">
-            <h5>Status</h5>
-            <p>{{item.status}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.release_date">
-            <h5>Release Date</h5>
-            <p>{{item.release_date}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.first_air_date">
-            <h5>First air date</h5>
-            <p>{{item.first_air_date}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.last_air_date">
-            <h5>Last air date</h5>
-            <p>{{item.last_air_date}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.number_of_seasons">
-            <h5>No. of Seasons</h5>
-            <p>{{item.number_of_seasons}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.number_of_episodes">
-            <h5>No. of episodes</h5>
-            <p>{{item.number_of_episodes}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.episode_run_time?.length">
-            <h5>Episode run time</h5>
-            <p>{{item.episode_run_time[0]}} min</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.runtime">
-            <h5>Run time</h5>
-            <p>{{item.runtime}} min</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.genres">
-            <h5>Genres</h5>
-            <p>{{item.genres | genres }}</p>
-          </div>
-        </div> -->
         <div *ngIf="item.type === EMovieType.MOVIE" class="information-box__additional-info info-add">
           <div class="info-add__box">
             <h5>Type</h5>

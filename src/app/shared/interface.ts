@@ -16,6 +16,7 @@ export interface IMovie {
   type: string;
   overview: string;
   vote_average: number;
+  suggested?: boolean;
   title: string;
   name: string;
   poster_path: string;
@@ -112,12 +113,14 @@ export enum EMoviesActions {
   LOAD = '[Movies API] loadMovies',
   SUCC = '[Movies API] loadMovies Success',
   FAIL = '[Movies API] loadMovies Failure',
+  SUGGEST = '[Movies API] suggest',
 }
 
 export enum ETvShowsActions {
   LOAD = '[TvShows API] loadTvShows',
   SUCC = '[TvShows API] loadTvShows Success',
   FAIL = '[TvShows API] loadTvShows Failure',
+  SUGGEST = '[TvShows API] suggest',
 }
 
 export enum EStatuses {

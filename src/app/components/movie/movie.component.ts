@@ -1,5 +1,7 @@
+import { suggestMovie } from './../../state/movies/movies.actions';
+import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
-import { IMovie } from 'src/app/shared/interface';
+import { IAppState, IMovie } from 'src/app/shared/interface';
 
 @Component({
   selector: 'app-movie',
@@ -11,7 +13,7 @@ export class MovieComponent implements OnInit {
   @Input() public isSuggest: boolean;
   public link: string;
 
-  constructor() {}
+  constructor(private store: Store<IAppState>) {}
 
   ngOnInit(): void {
     this.initMovie();
@@ -19,5 +21,9 @@ export class MovieComponent implements OnInit {
 
   private initMovie(): void {
     this.link = `${this.movieProps.type}/${this.movieProps.id}`;
+  }
+  public handleClick(id: number): void {
+    console.log(id);
+    this.store.dispatch(suggestMovie({ id }));
   }
 }

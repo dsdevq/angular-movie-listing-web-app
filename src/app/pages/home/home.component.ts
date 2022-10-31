@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   public ENavItem = ENavItems;
   public inputField: FormGroup;
   public value$: Observable<string>;
-  public movies$: Observable<IMovie[]> = this.http.tabChange(this.ENavItem.ALL);
+  public movies$: Observable<IMovie[]>;
   public selectedTab: string;
 
   constructor(
@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
   }
   // !!!!!
   private initHomePage(): void {
-    this.store.dispatch(loadMovies());
-    this.store.dispatch(loadTvShows());
+    this.movies$ = this.http.tabChange(ENavItems.ALL);
+
     this.inputField = this.fb.group({
       value: '',
     });

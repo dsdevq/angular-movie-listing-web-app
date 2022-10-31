@@ -10,3 +10,7 @@ export const loadMoviesFail = createAction(
   EMoviesActions.FAIL,
   props<{ error: string }>()
 );
+export const suggestMovie = createAction(
+  EMoviesActions.SUGGEST,
+  props<{ id: number }>()
+);

@@ -10,7 +10,7 @@
           <app-input formControlName="value"></app-input>
         </form>
       </section>
-      <mat-tab-group *ngIf="(movies | filter:(value$ | async) || '') as filtered"
+      <mat-tab-group *ngIf="movies | filter:(value$ | async) || '' as filtered"
         (selectedTabChange)="handleTabChange($event)" class="header-home__tabs" animationDuration="0ms">
         <mat-tab [label]="ENavItem.ALL">
           <span>
@@ -32,9 +32,8 @@
         </mat-tab>
       </mat-tab-group>
     </header>
-    <ng-container *ngIf="movies$ | async as movies">
+    <ng-container>
       <app-movie-list [movies]="movies | filter:(value$ | async) || '' "></app-movie-list>
-
     </ng-container>
     <div class="button__box">
       <app-button class="load-button" (click)="handleClick()">Load More</app-button>

@@ -1,3 +1,4 @@
+import { Error404Component } from './pages/error404/error404.component';
 import { SuggestMeComponent } from './pages/suggest-me/suggest-me.component';
 import { DetailsComponent } from './components/details/details.component';
 import { TvShowsComponent } from './pages/tv-shows/tv-shows.component';
@@ -12,11 +13,13 @@ const routes: Routes = [
   { path: 'tv-shows', component: TvShowsComponent },
   { path: ':movie|tv/:id', component: DetailsComponent },
   { path: 'suggest-me', component: SuggestMeComponent },
-  {
-    path: ':movies|tvs/:movie|tv/:id',
-    redirectTo: ':movie|tv/:id',
-    pathMatch: 'full',
-  },
+  { path: '**', redirectTo: 'not-found' },
+  { path: 'not-found', component: Error404Component },
+  // {
+  //   path: ':movies|tvs/:movie|tv/:id',
+  //   redirectTo: ':movie|tv/:id',
+  //   pathMatch: 'full',
+  // },
 ];
 
 @NgModule({

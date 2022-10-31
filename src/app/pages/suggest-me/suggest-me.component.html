@@ -7,16 +7,27 @@
           <br> to
           watch.
         </p>
-        <form class="search">
-          <app-input></app-input>
-          <app-button>Search</app-button>
+        <form [formGroup]="searchInput" (ngSubmit)="handleSubmit()" class="search">
+          <app-input formControlName="value"></app-input>
+          <app-button action="submit">Search</app-button>
         </form>
       </section>
     </header>
-    <app-movie-list [movies]="movies$ | async">
-    </app-movie-list>
-    <!-- <div class="button__box">
-      <app-button class="load-button">Suggest Manually</app-button>
-    </div> -->
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-movie-list *ngIf="value" [movies]="movies | filter:value">
+      </app-movie-list>
+      <div class="about-suggest__looking-for" *ngIf="value && (movies | filter:value)?.length">
+        <p>Didn't find the one you looking for?</p>
+      </div>
+      <div class="about-results" *ngIf="value && !(movies | filter:value)?.length">
+        <h2 class="about-results__heading">Sorry, No results found</h2>
+        <p class="about-results__description">There are no movies or TV shows matching your search terms. You can
+          suggest
+          me manually</p>
+      </div>
+      <div class="button__box" *ngIf="value">
+        <app-button class="load-button">Suggest Manually</app-button>
+      </div>
+    </ng-container>
   </div>
 </section>

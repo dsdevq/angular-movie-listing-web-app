@@ -4,8 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { IMovie, IMovieData } from '../interface';
-import { selectAllMovies } from '../../state/movies/movies.selectors';
 import { selectAllTvShows } from '../../state/tv-shows/tv-shows.selectors';
+import { loadTvShows } from 'src/app/state/tv-shows/tv-shows.actions';
+import { loadMovies } from 'src/app/state/movies/movies.actions';
+import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +41,7 @@ export class HttpService {
         map((result) =>
           result.results.map((movie) => ({
             ...movie,
+            suggested: false,
             type: 'movie',
             poster_path: this.getImage(this.POSTER_WIDTH, movie.poster_path),
           }))
@@ -58,6 +61,7 @@ export class HttpService {
           result.results.map((tv) => ({
             ...tv,
             title: tv.name,
+            suggested: false,
             type: 'tv',
             poster_path: this.getImage(this.POSTER_WIDTH, tv.poster_path),
           }))
@@ -83,14 +87,14 @@ export class HttpService {
     if (value === this.ENavItem.TV_SHOWS) {
       return this.store.select(selectAllTvShows);
     }
-    return this.store
-      .select(selectAllMovies)
-      .pipe(
-        switchMap((movies) =>
-          this.store
-            .select(selectAllTvShows)
-            .pipe(map((tvShows) => [...movies, ...tvShows]))
+    return this.store.select(selectAllMovies).pipe(
+      tap((e) => !e.length && this.store.dispatch(loadMovies())),
+      switchMap((movies) =>
+        this.store.select(selectAllTvShows).pipe(
+          tap((e) => !e.length && this.store.dispatch(loadTvShows())),
+          map((tvShows) => [...movies, ...tvShows])
         )
-      );
+      )
+    );
   }
 }

@@ -38,6 +38,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ButtonComponent } from './components/button/button.component';
 import { SuggestMeComponent } from './pages/suggest-me/suggest-me.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { Error404Component } from './pages/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MovieListComponent } from './components/movie-list/movie-list.component
     ButtonComponent,
     SuggestMeComponent,
     MovieListComponent,
+    Error404Component,
   ],
   imports: [
     BrowserModule,

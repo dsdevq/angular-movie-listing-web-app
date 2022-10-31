@@ -14,6 +14,5 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSuggest = this.route.url.split('/')[1] === 'suggest-me';
-    console.log(this.isSuggest);
   }
 }
