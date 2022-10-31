@@ -1,24 +1,24 @@
 <section class="page">
   <div class="page__container">
-    <header class="page__header header-page">
-      <section class="header-page__about about-page">
-        <a href="/">MaileHereko</a>
-        <h1 class="about-page__heading">{{heading}}</h1>
-      </section>
-      <form [formGroup]="inputValue">
-        <app-input formControlName="value"></app-input>
-      </form>
-      <p class="about-page__stats">{{(movies | filter:(value$ | async) || '')?.length}} items</p>
-    </header>
-    <ng-container>
-      <app-movie-list *ngIf="movies | filter:(value$ | async) || '' as filtered; else loader" [movies]="filtered">
+    <ng-container *ngrxLet="(movies | filter:(value$ | async) || '') as filtered">
+      <header class="page__header header-page">
+        <section class="header-page__about about-page">
+          <a href="/">MaileHereko</a>
+          <h1 class="about-page__heading">{{heading}}</h1>
+        </section>
+        <form [formGroup]="inputValue">
+          <app-input formControlName="value"></app-input>
+        </form>
+        <p class="about-page__stats">{{filtered?.length}} items</p>
+      </header>
+      <app-movie-list *ngIf="filtered; else loader" [movies]="filtered">
       </app-movie-list>
+      <ng-template #loader>
+        <app-loader></app-loader>
+      </ng-template>
+      <div class="button__box">
+        <app-button class="load-button" (click)="handleClick()">Load More</app-button>
+      </div>
     </ng-container>
-    <ng-template #loader>
-      <app-loader></app-loader>
-    </ng-template>
-    <div class="button__box">
-      <app-button class="load-button" (click)="handleClick()">Load More</app-button>
-    </div>
   </div>
 </section>

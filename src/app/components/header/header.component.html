@@ -11,8 +11,7 @@
         <li class="menu__item" *ngFor="let link of list">
           <a [routerLink]="link | url" class="menu__link">
             {{link}}
-            <!-- !!! -->
-            <mat-icon *ngIf="link === 'Suggest me'">arrow_forward</mat-icon>
+            <mat-icon *ngIf="link === EPage.SUGGEST">arrow_forward</mat-icon>
           </a>
         </li>
       </ul>

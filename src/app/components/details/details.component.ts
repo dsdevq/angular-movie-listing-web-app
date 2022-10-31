@@ -12,8 +12,8 @@ import {
 } from './../../shared/interface';
 import { HttpService } from '../../shared/services/http.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -27,10 +27,12 @@ export class DetailsComponent implements OnInit {
   public status$: Observable<string> = this.store.select(getSelectStatus);
   public EStatus = EStatuses;
   public EMovieType = EMovieTypes;
+  public type: string;
 
   constructor(
     public http: HttpService,
-    private route: Router,
+    private routeUrl: Router,
+    private routeType: ActivatedRoute,
     private store: Store<IAppState>
   ) {}
 
@@ -38,12 +40,15 @@ export class DetailsComponent implements OnInit {
     this.initDetails();
   }
   private initDetails(): void {
-    this.store.dispatch(
-      loadSelect({
-        url: this.route.url,
-        // !!!!!!!!!
-        itemType: this.route.url.split('/')[1],
-      })
-    );
+    this.routeType.params.pipe(take(1)).subscribe((e) => {
+      this.type = e['type'];
+
+      this.store.dispatch(
+        loadSelect({
+          url: this.routeUrl.url,
+          itemType: this.type,
+        })
+      );
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { AppInitializerService } from './shared/services/app-initializer.service';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { TypePipe } from './shared/pipes/type.pipe';
 import { GenresPipe } from './shared/pipes/genres.pipe';
@@ -6,14 +7,14 @@ import { UrlPipe } from './shared/pipes/url.pipe';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SelectEffects } from './state/selected/selected.effects';
 import { selectReducer } from './state/selected/selected.reducer';
-import { tvShowsReducer } from './state/tv-shows/tv-shows.reducer';
 import { moviesReducer } from './state/movies/movies.reducer';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LetModule } from '@ngrx/component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -30,7 +31,6 @@ import { DetailsComponent } from './components/details/details.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './state/movies/movies.effects';
-import { TvShowsEffects } from './state/tv-shows/tv-shows.effects';
 import { IAppState } from './shared/interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -39,6 +39,12 @@ import { ButtonComponent } from './components/button/button.component';
 import { SuggestMeComponent } from './pages/suggest-me/suggest-me.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 import { Error404Component } from './pages/error404/error404.component';
+import { LoadingImgDirective } from './shared/loading-img.directive';
+
+export const initializeApp =
+  (appInitService: AppInitializerService): (() => void) =>
+  (): Promise<void> =>
+    appInitService.init();
 
 @NgModule({
   declarations: [
@@ -61,6 +67,7 @@ import { Error404Component } from './pages/error404/error404.component';
     SuggestMeComponent,
     MovieListComponent,
     Error404Component,
+    LoadingImgDirective,
   ],
   imports: [
     BrowserModule,
@@ -68,21 +75,29 @@ import { Error404Component } from './pages/error404/error404.component';
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
+    LetModule,
     FormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot<IAppState>({
       moviesState: moviesReducer,
-      tvShowsState: tvShowsReducer,
       selectedState: selectReducer,
     }),
-    EffectsModule.forRoot([MovieEffects, TvShowsEffects, SelectEffects]),
+    EffectsModule.forRoot([MovieEffects, SelectEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
   ],
-  providers: [],
+  providers: [
+    AppInitializerService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppInitializerService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

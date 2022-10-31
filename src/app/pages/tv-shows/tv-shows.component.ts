@@ -1,9 +1,9 @@
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState, IMovie } from 'src/app/shared/interface';
-import { loadTvShows } from 'src/app/state/tv-shows/tv-shows.actions';
-import { selectAllTvShows } from 'src/app/state/tv-shows/tv-shows.selectors';
+import { selectAllTvShows } from 'src/app/state/movies/movies.selectors';
+import { loadTvShows } from 'src/app/state/movies/movies.actions';
 
 @Component({
   selector: 'app-tv-shows',
@@ -20,11 +20,7 @@ export class TvShowsComponent implements OnInit {
   }
 
   private initTvShows(): void {
-    this.tvShowsInfo$ = this.store
-      .select(selectAllTvShows)
-      .pipe(
-        tap((tvShows) => !tvShows.length && this.store.dispatch(loadTvShows()))
-      );
+    this.tvShowsInfo$ = this.store.select(selectAllTvShows);
   }
   public handleClick(): void {
     this.store.dispatch(loadTvShows());

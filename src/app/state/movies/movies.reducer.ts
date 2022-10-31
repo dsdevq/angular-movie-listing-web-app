@@ -1,8 +1,9 @@
 import {
   loadMovies,
   loadMoviesSucc,
+  loadTvShows,
   loadMoviesFail,
-  suggestMovie,
+  suggestMovieTvShow,
 } from './movies.actions';
 import { EStatuses, IMoviesState } from './../../shared/interface';
 import { createReducer, on } from '@ngrx/store';
@@ -17,7 +18,10 @@ export const moviesReducer = createReducer(
   // Supply the initial state
   initialState,
   // Trigger loading the movies
-  on(loadMovies, (state) => ({ ...state, status: EStatuses.LOAD })),
+  on(loadMovies, loadTvShows, (state) => ({
+    ...state,
+    status: EStatuses.LOAD,
+  })),
   // Handle successfully loaded movies
   on(loadMoviesSucc, (state, { movies }) => ({
     ...state,
@@ -31,7 +35,8 @@ export const moviesReducer = createReducer(
     error,
     status: EStatuses.FAIL,
   })),
-  on(suggestMovie, (state, { id }) => {
+
+  on(suggestMovieTvShow, (state, { id }) => {
     return {
       ...state,
       movies: state.movies.map((el) =>

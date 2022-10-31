@@ -8,18 +8,21 @@ import { HomeComponent } from './pages/home/home.component';
 import { MoviesComponent } from './pages/movies/movies.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'movies', component: MoviesComponent },
-  { path: 'tv-shows', component: TvShowsComponent },
-  { path: ':movie|tv/:id', component: DetailsComponent },
-  { path: 'suggest-me', component: SuggestMeComponent },
-  { path: '**', redirectTo: 'not-found' },
-  { path: 'not-found', component: Error404Component },
   // {
-  //   path: ':movies|tvs/:movie|tv/:id',
-  //   redirectTo: ':movie|tv/:id',
-  //   pathMatch: 'full',
+  //   path: '',
+  //   loadChildren: () =>
+  //     import('./pages/home/home.module').then((m) => m.HomeModule),
   // },
+  { path: '', component: HomeComponent },
+  {
+    path: 'movies',
+    loadChildren: () =>
+      import('./pages/movies/movies.module').then((m) => m.MoviesModule),
+  },
+  { path: 'tv-shows', component: TvShowsComponent },
+  { path: ':type/:id', component: DetailsComponent },
+  { path: 'suggest-me', component: SuggestMeComponent },
+  { path: '**', component: Error404Component },
 ];
 
 @NgModule({

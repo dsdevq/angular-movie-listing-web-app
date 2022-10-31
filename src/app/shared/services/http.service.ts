@@ -1,13 +1,15 @@
+import { EMovieTypes } from './../interface';
+import { selectMoviesAndTvShows } from './../../state/movies/movies.selectors';
 import { Store } from '@ngrx/store';
 import { ENavItems, IAppState, IMovieDetails } from '../interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IMovie, IMovieData } from '../interface';
-import { selectAllTvShows } from '../../state/tv-shows/tv-shows.selectors';
-import { loadTvShows } from 'src/app/state/tv-shows/tv-shows.actions';
-import { loadMovies } from 'src/app/state/movies/movies.actions';
-import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
+import {
+  selectAllMovies,
+  selectAllTvShows,
+} from 'src/app/state/movies/movies.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +28,12 @@ export class HttpService {
 
   constructor(private http: HttpClient, private store: Store<IAppState>) {}
 
-  private getImage = (width: number = 500, url: string) =>
-    `${this.IMAGE_URL}/w${width}${url}`;
+  private getImage = (width: number = 500, url: string | null): string => {
+    if (!url) {
+      return '';
+    }
+    return `${this.IMAGE_URL}/w${width}${url}`;
+  };
 
   public getMovies = (): Observable<IMovie[]> =>
     this.http
@@ -42,7 +48,7 @@ export class HttpService {
           result.results.map((movie) => ({
             ...movie,
             suggested: false,
-            type: 'movie',
+            type: EMovieTypes.MOVIE,
             poster_path: this.getImage(this.POSTER_WIDTH, movie.poster_path),
           }))
         )
@@ -62,7 +68,7 @@ export class HttpService {
             ...tv,
             title: tv.name,
             suggested: false,
-            type: 'tv',
+            type: EMovieTypes.TV,
             poster_path: this.getImage(this.POSTER_WIDTH, tv.poster_path),
           }))
         )
@@ -81,20 +87,13 @@ export class HttpService {
 
   // !!!
   public tabChange(value: string): Observable<IMovie[]> {
-    if (value === this.ENavItem.MOVIES) {
-      return this.store.select(selectAllMovies);
+    switch (value) {
+      case this.ENavItem.MOVIES:
+        return this.store.select(selectAllMovies);
+      case this.ENavItem.TV_SHOWS:
+        return this.store.select(selectAllTvShows);
+      default:
+        return this.store.select(selectMoviesAndTvShows);
     }
-    if (value === this.ENavItem.TV_SHOWS) {
-      return this.store.select(selectAllTvShows);
-    }
-    return this.store.select(selectAllMovies).pipe(
-      tap((e) => !e.length && this.store.dispatch(loadMovies())),
-      switchMap((movies) =>
-        this.store.select(selectAllTvShows).pipe(
-          tap((e) => !e.length && this.store.dispatch(loadTvShows())),
-          map((tvShows) => [...movies, ...tvShows])
-        )
-      )
-    );
   }
 }

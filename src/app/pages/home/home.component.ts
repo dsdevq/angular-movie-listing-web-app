@@ -1,12 +1,18 @@
+import { selectMoviesAndTvShows } from 'src/app/state/movies/movies.selectors';
 import { HttpService } from '../../shared/services/http.service';
-import { loadTvShows } from './../../state/tv-shows/tv-shows.actions';
-import { loadMovies } from './../../state/movies/movies.actions';
+import { loadMovies, loadTvShows } from './../../state/movies/movies.actions';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ENavItems, IAppState, IMovie } from 'src/app/shared/interface';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable, map, distinctUntilChanged, debounceTime } from 'rxjs';
+import {
+  Observable,
+  map,
+  distinctUntilChanged,
+  debounceTime,
+  catchError,
+} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +21,7 @@ import { Observable, map, distinctUntilChanged, debounceTime } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
-  public ENavItem = ENavItems;
+  public ENavItemsArray: string[];
   public inputField: FormGroup;
   public value$: Observable<string>;
   public movies$: Observable<IMovie[]>;
@@ -32,24 +38,29 @@ export class HomeComponent implements OnInit {
   }
   // !!!!!
   private initHomePage(): void {
-    this.movies$ = this.http.tabChange(ENavItems.ALL);
+    this.movies$ = this.store.select(selectMoviesAndTvShows);
+    this.ENavItemsArray = Object.values(ENavItems);
 
     this.inputField = this.fb.group({
       value: '',
     });
+
     this.value$ = this.inputField.valueChanges.pipe(
-      distinctUntilChanged(),
       debounceTime(300),
-      map((e: FormControl) => e.value)
+      map((e: FormControl) => e.value),
+      distinctUntilChanged(),
+      catchError((e) => {
+        throw new Error(`Error! ${e}`);
+      })
     );
   }
 
-  public handleTabChange(e: MatTabChangeEvent) {
+  public handleTabChange(e: MatTabChangeEvent): void {
     this.movies$ = this.http.tabChange(e.tab.textLabel);
     this.selectedTab = e.tab.textLabel;
   }
 
-  public handleClick() {
+  public handleClick(): void {
     // !!!!!!
     if (this.selectedTab === ENavItems.MOVIES) {
       this.store.dispatch(loadMovies());

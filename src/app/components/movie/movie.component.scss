@@ -21,17 +21,12 @@ $background: #20283e;
     position: relative;
     overflow: hidden;
     img {
-      max-width: 266px;
+      max-width: 500px;
       transition: 0.3s;
+      width: 100%;
+      margin: 0;
       &:hover {
         scale: 1.05;
-      }
-    }
-    :host,
-    ::ng-deep {
-      .mat-card-image {
-        width: 100%;
-        margin: 0;
       }
     }
   }

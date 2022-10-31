@@ -1,4 +1,4 @@
-import { ENavItems } from './../../shared/interface';
+import { ENavItems, EPages } from './../../shared/interface';
 import { UiDataService } from './../../shared/services/ui-data.service';
 import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   public list: string[];
   public isMenuOpen: boolean;
   public ENavItem = ENavItems;
+  public EPage = EPages;
+
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,

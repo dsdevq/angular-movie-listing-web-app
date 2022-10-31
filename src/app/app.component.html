@@ -3,7 +3,7 @@
   <mat-sidenav-container class="sidenav">
     <mat-sidenav class="sidenav__sidenav" #sidenav autoFocus="false" mode="over">
       <a class="sidenav__link" mat-button *ngFor="let link of list" [routerLink]="link | url">{{link}}
-        <mat-icon *ngIf="link === 'Suggest me'">arrow_forward</mat-icon>
+        <mat-icon *ngIf="link === EPage.SUGGEST">arrow_forward</mat-icon>
       </a>
 
     </mat-sidenav>

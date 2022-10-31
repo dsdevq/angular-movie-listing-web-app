@@ -1,4 +1,4 @@
-import { IMovie } from './../../shared/interface';
+import { IMovie, EPages } from './../../shared/interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,11 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./movie-list.component.scss'],
 })
 export class MovieListComponent implements OnInit {
-  @Input() movies: IMovie[] | null;
+  @Input() movies: IMovie[];
   public isSuggest: boolean;
   constructor(private route: Router) {}
 
   ngOnInit(): void {
-    this.isSuggest = this.route.url.split('/')[1] === 'suggest-me';
+    this.initMovieList();
+  }
+  private initMovieList() {
+    this.isSuggest = this.route.url
+      .split('/')
+      .includes(EPages.SUGGEST.toLowerCase().split(' ').join('-'));
   }
 }

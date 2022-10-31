@@ -1,4 +1,4 @@
-import { suggestMovie } from './../../state/movies/movies.actions';
+import { suggestMovieTvShow } from './../../state/movies/movies.actions';
 import { Store } from '@ngrx/store';
 import { Component, Input, OnInit } from '@angular/core';
 import { IAppState, IMovie } from 'src/app/shared/interface';
@@ -20,10 +20,9 @@ export class MovieComponent implements OnInit {
   }
 
   private initMovie(): void {
-    this.link = `${this.movieProps.type}/${this.movieProps.id}`;
+    this.link = `/${this.movieProps.type}/${this.movieProps.id}`;
   }
   public handleClick(id: number): void {
-    console.log(id);
-    this.store.dispatch(suggestMovie({ id }));
+    this.store.dispatch(suggestMovieTvShow({ id }));
   }
 }

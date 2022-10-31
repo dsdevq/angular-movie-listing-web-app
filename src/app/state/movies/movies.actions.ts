@@ -1,16 +1,20 @@
-import { EMoviesActions, IMovie } from 'src/app/shared/interface';
+import { EMoviesTvShowsActions, IMovie } from 'src/app/shared/interface';
 import { createAction, props } from '@ngrx/store';
 
-export const loadMovies = createAction(EMoviesActions.LOAD);
+export const loadMovies = createAction(EMoviesTvShowsActions.MOVIE_LOAD);
+export const loadTvShows = createAction(EMoviesTvShowsActions.TV_LOAD);
+
 export const loadMoviesSucc = createAction(
-  EMoviesActions.SUCC,
+  EMoviesTvShowsActions.MOVIE_SUCC,
   props<{ movies: IMovie[] }>()
 );
+
 export const loadMoviesFail = createAction(
-  EMoviesActions.FAIL,
+  EMoviesTvShowsActions.MOVIE_FAIL,
   props<{ error: string }>()
 );
-export const suggestMovie = createAction(
-  EMoviesActions.SUGGEST,
+
+export const suggestMovieTvShow = createAction(
+  EMoviesTvShowsActions.SUGGEST,
   props<{ id: number }>()
 );
