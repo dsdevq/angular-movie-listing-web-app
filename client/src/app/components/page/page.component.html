@@ -1,0 +1,25 @@
+<section class="page">
+  <div class="page__container">
+    <ng-container *ngrxLet="(movies | filter:(value$ | async) || '') as filtered">
+      <header class="page__header header-page">
+        <section class="header-page__about about-page">
+          <a href="/">MaileHereko</a>
+          <h1 class="about-page__heading">{{heading}}</h1>
+        </section>
+        <form class="about-page__form" [formGroup]="inputValue">
+          <app-input [placeholder]="EInputSettings.PLACEHOLDER" [label]="EInputSettings.LABEL"
+            [prefix]="EInputSettings.PREFIX" formControlName="value"></app-input>
+        </form>
+        <p class="about-page__stats">{{filtered?.length}} items</p>
+      </header>
+      <app-movie-list *ngIf="filtered; else loader" [movies]="filtered">
+      </app-movie-list>
+      <ng-template #loader>
+        <app-loader></app-loader>
+      </ng-template>
+      <div class="button__box">
+        <app-button class="load-button" (click)="handleClick()">Load More</app-button>
+      </div>
+    </ng-container>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<section class="add">
+  <div class="add__container">
+    <header class="add__header header-add">
+      <section class="header-add__about about-add">
+        <h1 class="about-add__heading">Add new item</h1>
+
+        <form [formGroup]="searchInput" (ngSubmit)="handleSubmit()" class="search">
+          <app-input class="about-add__form" [label]="EInputSettings.LABEL" [placeholder]="EInputSettings.PLACEHOLDER"
+            [prefix]="EInputSettings.PREFIX" formControlName="value">
+          </app-input>
+          <app-button action="submit">Search</app-button>
+        </form>
+      </section>
+    </header>
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-movie-list *ngIf="value" [movies]="movies | filter:value">
+      </app-movie-list>
+      <!-- <div class="about-add__looking-for" *ngIf="value && (movies | filter:value)?.length">
+        <p>Didn't find the one you looking for?</p>
+      </div>
+      <div class="about-results" *ngIf="value && !(movies | filter:value)?.length">
+        <h2 class="about-results__heading">Sorry, No results found</h2>
+        <p class="about-results__description">There are no movies or TV shows matching your search terms. You can
+          add
+          me manually</p>
+      </div>
+      <div class="button__box" *ngIf="value">
+        <app-button class="load-button">add Manually</app-button>
+      </div> -->
+    </ng-container>
+  </div>
+</section>
