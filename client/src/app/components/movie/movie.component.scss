@@ -1,0 +1,66 @@
+@import "../../../variables";
+
+$background: #20283e;
+
+.card {
+  max-width: 282px;
+  height: 100%;
+  background-color: $background;
+  color: $grey-50;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  .mat-card-content {
+    flex: 1;
+    height: 100%;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+  }
+  &__image {
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    img {
+      max-width: 500px;
+      transition: 0.3s;
+      width: 100%;
+      margin: 0;
+      &:hover {
+        scale: 1.05;
+      }
+    }
+  }
+  &__rating {
+    top: 10px;
+    left: 8px;
+    position: absolute;
+  }
+  &__name {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+  }
+  &__title {
+    color: $grey-50;
+  }
+  &__suggest {
+    display: flex;
+    color: $primary-400;
+    align-items: center;
+    gap: 8px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.suggested {
+  color: $success-400;
+}

@@ -1,0 +1,61 @@
+<section class="dashboard">
+  <div class="dashboard__container">
+    <article class="dashboard__welcome welcome-dashboard">
+      <h2 class="welcome-dashboard__heading">
+        Welcome USERNAME
+      </h2>
+      <ul class="welcome-dashboard__userdata userdata">
+        <!-- ! TODO NGFOR -->
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            93
+          </span>
+          <h5 class="userdata__item-caption">
+            Movies
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            26
+          </span>
+          <h5 class="userdata__item-caption">
+            Shows
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            7
+          </span>
+          <h5 class="userdata__item-caption">
+            Suggestions
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            3
+          </span>
+          <h5 class="userdata__item-caption">
+            Manual suggestions
+          </h5>
+        </li>
+      </ul>
+    </article>
+    <article class="dashboard__links quick-links">
+      <h5 class="quick-links__header">
+        Quick links
+      </h5>
+      <ul class="quick-links__menu menu-links">
+        <li class="menu-links__link">
+          <a [routerLink]="['/suggestions']">
+            Suggestions
+          </a>
+        </li>
+        <li class=" menu-links__link">
+          <a [routerLink]="['/add']" class="">
+            Add
+          </a>
+        </li>
+      </ul>
+    </article>
+  </div>
+</section>

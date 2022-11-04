@@ -1,0 +1,19 @@
+<section class="login">
+  <div class="login__container">
+    <picture class="login__image">
+      <img appLoadingImg src="../../../assets/login.svg" loader="'../../../assets/loader.gif'"
+        onErrorSrc="'../../../assets/error.png'" alt="Login">
+    </picture>
+    <form [formGroup]="form" (ngSubmit)="login()" class="login__form form-login">
+      <h2 class="form-login__heading">Login</h2>
+      <fieldset class="form-login__fieldset">
+        <app-input formControlName="email" class="form-login__input" [type]="EInputEmail.TYPE"
+          [label]="EInputEmail.LABEL" [prefix]="EInputEmail.PREFIX"></app-input>
+        <app-input formControlName="password" class="form-login__input" [type]="EInputPassword.TYPE"
+          [label]="EInputPassword.LABEL" [prefix]="EInputPassword.PREFIX" [suffix]="EInputPassword.SUFFIX">
+        </app-input>
+      </fieldset>
+      <app-button class="form-login__button">Login</app-button>
+    </form>
+  </div>
+</section>

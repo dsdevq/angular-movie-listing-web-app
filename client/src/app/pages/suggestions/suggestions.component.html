@@ -1,0 +1,11 @@
+<section class="suggestions">
+  <div class="suggestions__container">
+    <h2 class="suggestions__heading">
+      Suggestions
+    </h2>
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-movie-list [movies]="movies">
+      </app-movie-list>
+    </ng-container>
+  </div>
+</section>

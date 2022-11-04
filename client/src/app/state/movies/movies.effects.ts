@@ -1,0 +1,46 @@
+import { HttpService } from '../../shared/services/http.service';
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import {
+  loadMovies,
+  loadMoviesFail,
+  loadMoviesSucc,
+  loadTvShows,
+} from './movies.actions';
+
+@Injectable()
+export class MovieEffects {
+  loadMovies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadMovies),
+      switchMap(() =>
+        // Call the getMovies method, it returns an observable
+        this.http.getMovies().pipe(
+          // Take the returned value and return a new success action containing movies
+          map((movies) => loadMoviesSucc({ movies })),
+          // Or... if it errors return a new failure action containing the error
+          catchError((error) => of(loadMoviesFail({ error })))
+        )
+      )
+    )
+  );
+
+  loadTvShows$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTvShows),
+      switchMap(() =>
+        // Call the getTvShows method, it returns an observable
+        this.http.getTvShows().pipe(
+          // Take the returned value and return a new success action containing tvShows
+          map((movies) => loadMoviesSucc({ movies })),
+          // Or... if it errors return a new failure action containing the error
+          catchError((error) => of(loadMoviesFail({ error })))
+        )
+      )
+    )
+  );
+
+  constructor(private actions$: Actions, private http: HttpService) {}
+}

@@ -1,0 +1,35 @@
+$width: 486px;
+.login {
+  &__container {
+    margin-top: 40px;
+    margin-bottom: 120px;
+    display: flex;
+    align-items: center;
+    gap: 126px;
+    flex-wrap: wrap-reverse;
+    > * {
+      flex: 1 1 40%;
+      max-width: $width;
+    }
+    @media (max-width: 768px) {
+      gap: 70px;
+      justify-content: center;
+    }
+  }
+  &__image {
+    img {
+      max-height: 584px;
+      width: 100%;
+    }
+  }
+}
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  &__fieldset {
+    display: inherit;
+    flex-direction: inherit;
+    gap: 16px;
+  }
+}
