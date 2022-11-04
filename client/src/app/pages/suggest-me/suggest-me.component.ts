@@ -16,6 +16,7 @@ export class SuggestMeComponent implements OnInit {
   public searchInput: FormGroup;
   public value: string;
   public EInputSettings = ESearchInputSettings;
+  public isSuggest: boolean;
 
   constructor(private store: Store<IAppState>, private fb: FormBuilder) {}
 
@@ -27,6 +28,7 @@ export class SuggestMeComponent implements OnInit {
     this.searchInput = this.fb.group({
       value: '',
     });
+    this.isSuggest = true;
   }
   public handleSubmit(): void {
     if (this.searchInput.value.value.trim()) {

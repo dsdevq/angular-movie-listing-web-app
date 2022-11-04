@@ -18,6 +18,7 @@ export class AddComponent implements OnInit {
   public movies$: Observable<IMovie[]>;
   public searchInput: FormGroup;
   public value: string;
+  public isAddToList: boolean;
   public EInputSettings = ESearchInputSettings;
 
   constructor(private store: Store<IAppState>, private fb: FormBuilder) {}
@@ -30,6 +31,7 @@ export class AddComponent implements OnInit {
     this.searchInput = this.fb.group({
       value: '',
     });
+    this.isAddToList = true;
   }
   public handleSubmit(): void {
     if (this.searchInput.value.value.trim()) {

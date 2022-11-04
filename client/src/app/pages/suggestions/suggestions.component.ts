@@ -11,6 +11,7 @@ import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
 })
 export class SuggestionsComponent implements OnInit {
   public movies$: Observable<IMovie[]>;
+  public isAddToList: boolean;
   constructor(private store: Store<IAppState>) {}
 
   ngOnInit(): void {
@@ -18,5 +19,6 @@ export class SuggestionsComponent implements OnInit {
   }
   private init(): void {
     this.movies$ = this.store.select(selectAllMovies);
+    this.isAddToList = true;
   }
 }

@@ -12,16 +12,20 @@
     <span class="card__title">
       {{movieProps.title}}
     </span>
-    <p (click)="handleClick(movieProps.id)" [ngClass]="{'suggested': movieProps.suggested}" *ngIf="isSuggest"
-      class="card__suggest">
-      <mat-icon>{{movieProps.suggested ? 'check_circle' :'thumb_up' }}</mat-icon>
-      {{ movieProps.suggested ? 'Already watched' : 'Suggest me' }}
-    </p>
+    <ng-container>
 
-    <p (click)="handleClick(movieProps.id)" [ngClass]="{'suggested': movieProps.suggested}" *ngIf="isSuggestions"
-      class="card__suggest">
-      <mat-icon>{{movieProps.suggested ? 'check_circle' :'add' }}</mat-icon>
-      {{ movieProps.suggested ? 'Already watched' : 'Add to my list' }}
-    </p>
+      <p *ngIf="isSuggest" (click)="handleClick(movieProps.id)" [ngClass]="{'suggested': movieProps.suggested}"
+        class="card__suggest">
+        <mat-icon>{{movieProps.suggested ? 'check_circle' :'thumb_up' }}</mat-icon>
+        {{ movieProps.suggested ? 'Already watched' : 'Suggest me' }}
+      </p>
+
+      <p *ngIf="isAddToList" (click)="handleClick(movieProps.id)" [ngClass]="{'suggested': movieProps.suggested}"
+        class="card__suggest">
+        <mat-icon>{{movieProps.suggested ? 'check_circle' :'add' }}</mat-icon>
+        {{ movieProps.suggested ? 'Already watched' : 'Add to my list' }}
+      </p>
+
+    </ng-container>
   </mat-card-content>
 </mat-card>

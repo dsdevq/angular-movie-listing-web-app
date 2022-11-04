@@ -4,7 +4,7 @@
       <img appLoadingImg loader="'../../../assets/loader.gif'" onErrorSrc="'../../../assets/error.png'"
         class="background-image__image" [src]="item.backdrop_path" [alt]="item.title">
       <article class="background-image__label">
-        <div>
+        <div class="background-image__box">
           <a class="background-image__link" routerLink="/">MaileHereko</a>
           <span class="background-image__link"> / </span>
           <a class="background-image__link" [routerLink]="'/' + (item.type | type:2 | url)">{{item.type | type:2}}</a>

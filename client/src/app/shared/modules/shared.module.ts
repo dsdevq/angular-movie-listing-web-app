@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { PageComponent } from '../../components/page/page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button.component';
-import { MovieListComponent } from '../../components/movie-list/movie-list.component';
 import { InputComponent } from '../../components/input/input.component';
 import { MaterialModule } from './material.module';
 import { MovieComponent } from '../../components/movie/movie.component';
@@ -29,7 +28,6 @@ import { ToggleDirective } from '../directives/toggle.directive';
   declarations: [
     PageComponent,
     ButtonComponent,
-    MovieListComponent,
     InputComponent,
     MovieComponent,
     RatingComponent,
@@ -55,7 +53,6 @@ import { ToggleDirective } from '../directives/toggle.directive';
     RatingComponent,
     PageComponent,
     ButtonComponent,
-    MovieListComponent,
     MovieComponent,
     InputComponent,
     LoaderComponent,

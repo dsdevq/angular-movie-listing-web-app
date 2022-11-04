@@ -12,11 +12,15 @@
         </form>
         <p class="about-page__stats">{{filtered?.length}} items</p>
       </header>
-      <app-movie-list *ngIf="filtered; else loader" [movies]="filtered">
-      </app-movie-list>
+
+      <section *ngIf="filtered; else loader" class="movie-list">
+        <app-movie *ngFor="let movie of filtered" [movieProps]="movie"></app-movie>
+      </section>
+
       <ng-template #loader>
         <app-loader></app-loader>
       </ng-template>
+
       <div class="button__box">
         <app-button class="load-button" (click)="handleClick()">Load More</app-button>
       </div>

@@ -1,3 +1,6 @@
+import { UrlPipe } from './shared/pipes/url.pipe';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { UserEffects } from './state/user/user.effects';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/modules/shared.module';
@@ -15,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './state/movies/movies.effects';
@@ -25,6 +28,7 @@ import { Error404Component } from './pages/error404/error404.component';
 import { LoadingImgDirective } from './shared/directives/loading-img.directive';
 import { userReducer } from './state/user/user.reducer';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NavItemComponent } from './components/nav-items/nav-items.component';
 
 export const initializeApp =
   (appInitService: AppInitializerService): (() => void) =>
@@ -41,6 +45,7 @@ const tokenGetter = () => {
     HeaderComponent,
     Error404Component,
     LoadingImgDirective,
+    NavItemComponent,
   ],
   imports: [
     SharedModule,
@@ -68,11 +73,18 @@ const tokenGetter = () => {
   providers: [
     AppInitializerService,
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       deps: [AppInitializerService],
       multi: true,
     },
+    AuthGuard,
+    UrlPipe,
   ],
   bootstrap: [AppComponent],
 })

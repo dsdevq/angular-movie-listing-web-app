@@ -5,36 +5,10 @@
         <mat-icon class="header__logo" svgIcon="logo"></mat-icon>
       </a>
       <button mat-button class="header__button" (click)="toggleSidenav()">
-        <mat-icon>{{ isMenuOpen && 'menu_open' || 'menu' }}</mat-icon>
+        <mat-icon>{{ (isMenuOpened$ | async) && 'menu_open' || 'menu' }}</mat-icon>
       </button>
-
-      <!-- !!!!!!!!!!! TODO -->
-
-      <ul class="menu__list" *ngIf="!(isLogged$ | async)">
-        <li class="menu__item" *ngFor="let link of list">
-
-          <a *ngIf="link !== EPagesAuthorized.LOGOUT" [routerLink]="link | url" class="menu__link">
-            {{link}}
-            <mat-icon *ngIf="link === EPage.SUGGEST">arrow_forward</mat-icon>
-          </a>
-          <a *ngIf="link === EPagesAuthorized.LOGOUT" class="menu__link" (click)="logout()">
-            <mat-icon>logout</mat-icon>
-            {{link}}
-          </a>
-        </li>
-      </ul>
-
-      <ul *ngIf="isLogged$ | async" class="menu__list">
-        <li class="menu__item" *ngFor="let link of listAuthorized">
-          <a *ngIf="link !== EPagesAuthorized.LOGOUT" [routerLink]="link | url" class="menu__link">
-            {{link}}
-          </a>
-          <a *ngIf="link === EPagesAuthorized.LOGOUT" class="menu__link" (click)="logout()">
-            <mat-icon>logout</mat-icon>
-            {{link}}
-          </a>
-        </li>
-      </ul>
+      <app-nav-items class="menu__items">
+      </app-nav-items>
     </nav>
   </div>
 </header>

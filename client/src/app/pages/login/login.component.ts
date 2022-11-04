@@ -22,9 +22,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<IAppState> // private authService: AuthService,
-  ) // private router: Router
-  {}
+    private store: Store<IAppState> // private authService: AuthService, // private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -35,16 +34,9 @@ export class LoginComponent implements OnInit {
 
   public login() {
     const { email, password } = this.form.value;
-    console.log(email, password);
 
     if (email && password) {
       this.store.dispatch(loginUser({ email, password }));
-      // this.authService.login(email, password).subscribe((e) => {
-      //   console.log('LOGIN', e);
-      //   console.log('User is logged in');
-
-      //   this.router.navigateByUrl('/');
-      // });
     }
   }
 }

@@ -1,5 +1,11 @@
 import { Router } from '@angular/router';
-import { shareReplay, tap, Observable, BehaviorSubject } from 'rxjs';
+import {
+  shareReplay,
+  tap,
+  Observable,
+  BehaviorSubject,
+  catchError,
+} from 'rxjs';
 import { IUser } from '../interfaces/interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -26,8 +32,9 @@ export class AuthService {
       })
       .pipe(
         tap((e) => {
+          console.log(e);
           this.setSession(e);
-          this.route.navigate(['/']);
+          this.route.navigate(['/dashboard']);
         }),
         shareReplay()
       );
@@ -41,8 +48,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    localStorage.clear();
     this._isLoggedIn$.next(false);
   }
 
@@ -52,12 +58,5 @@ export class AuthService {
       return !this.jwtService.isTokenExpired(token);
     }
     return false;
-  }
-
-  public getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    if (expiration) {
-    }
-    throw new Error('No expiration');
   }
 }

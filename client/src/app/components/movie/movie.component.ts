@@ -11,9 +11,9 @@ import { IAppState, IMovie } from 'src/app/shared/interfaces/interface';
 export class MovieComponent implements OnInit {
   @Input() public movieProps: IMovie;
   @Input() public isSuggest: boolean;
-  @Input() public isSuggestions: boolean;
+  @Input() public isAddToList: boolean;
+
   public link: string;
-  public moviesDetails: string[];
 
   constructor(private store: Store<IAppState>) {}
 
