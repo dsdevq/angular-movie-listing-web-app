@@ -15,6 +15,7 @@ import { UrlPipe } from '../pipes/url.pipe';
 import { TypePipe } from '../pipes/type.pipe';
 import { GenresPipe } from '../pipes/genres.pipe';
 import { ToggleDirective } from '../directives/toggle.directive';
+import { LoadingImgDirective } from '../directives/loading-img.directive';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ToggleDirective } from '../directives/toggle.directive';
     UrlPipe,
     TypePipe,
     ToggleDirective,
+    LoadingImgDirective,
   ],
   exports: [
     CommonModule,
@@ -57,6 +59,8 @@ import { ToggleDirective } from '../directives/toggle.directive';
     InputComponent,
     LoaderComponent,
     FilterPipe,
+    ToggleDirective,
+    LoadingImgDirective,
   ],
 })
 export class SharedModule {}

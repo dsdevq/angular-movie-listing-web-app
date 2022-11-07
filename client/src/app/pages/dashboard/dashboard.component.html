@@ -1,42 +1,42 @@
 <section class="dashboard">
   <div class="dashboard__container">
-    <article class="dashboard__welcome welcome-dashboard">
+    <article class="dashboard__welcome welcome-dashboard" *ngIf="username$ | async as user">
       <h2 class="welcome-dashboard__heading">
-        Welcome USERNAME
+        Welcome, {{user.username}}
       </h2>
       <ul class="welcome-dashboard__userdata userdata">
         <!-- ! TODO NGFOR -->
         <li class="userdata__item">
           <span class="userdata__item-info">
-            93
+            {{user.movies.length}}
           </span>
-          <h5 class="userdata__item-caption">
+          <a routerLink="/movies" class="userdata__item-caption">
             Movies
-          </h5>
+          </a>
         </li>
         <li class="userdata__item">
           <span class="userdata__item-info">
-            26
+            {{user.tvShows.length}}
           </span>
-          <h5 class="userdata__item-caption">
+          <a routerLink="/tv-shows" class="userdata__item-caption">
             Shows
-          </h5>
+          </a>
         </li>
         <li class="userdata__item">
           <span class="userdata__item-info">
-            7
+            {{user.suggestions.length}}
           </span>
-          <h5 class="userdata__item-caption">
+          <a routerLink="/suggestions" class="userdata__item-caption">
             Suggestions
-          </h5>
+          </a>
         </li>
         <li class="userdata__item">
           <span class="userdata__item-info">
-            3
+            {{user.manual_suggestions.length}}
           </span>
-          <h5 class="userdata__item-caption">
+          <a routerLink="/suggest-me" class="userdata__item-caption">
             Manual suggestions
-          </h5>
+          </a>
         </li>
       </ul>
     </article>
@@ -45,13 +45,13 @@
         Quick links
       </h5>
       <ul class="quick-links__menu menu-links">
-        <li class="menu-links__link">
-          <a [routerLink]="['/suggestions']">
+        <li class="menu-links__item">
+          <a class="menu-links__link" [routerLink]="['/suggestions']">
             Suggestions
           </a>
         </li>
-        <li class=" menu-links__link">
-          <a [routerLink]="['/add']" class="">
+        <li class="menu-links__item">
+          <a class="menu-links__link" [routerLink]="['/add']">
             Add
           </a>
         </li>

@@ -1,9 +1,11 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { loadMovies } from './../../state/movies/movies.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IAppState, IMovie } from 'src/app/shared/interfaces/interface';
+import { EPages, IAppState, IMovie } from 'src/app/shared/interfaces/interface';
 import { selectAllMovies } from 'src/app/state/movies/movies.selectors';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { selectUserData } from 'src/app/state/user/user.selectors';
 
 @Component({
   selector: 'app-movies',
@@ -12,13 +14,24 @@ import { Observable } from 'rxjs';
 })
 export class MoviesComponent implements OnInit {
   public moviesInfo$: Observable<IMovie[]>;
-  constructor(private store: Store<IAppState>) {}
+  public EPages = EPages;
+
+  constructor(
+    private store: Store<IAppState>,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.initMovies();
   }
   private initMovies(): void {
-    this.moviesInfo$ = this.store.select(selectAllMovies);
+    if (!this.authService.isLoggedIn()) {
+      this.moviesInfo$ = this.store.select(selectAllMovies);
+      return;
+    }
+    this.moviesInfo$ = this.store
+      .select(selectUserData)
+      .pipe(map((user) => user.movies));
   }
   public handleClick(): void {
     this.store.dispatch(loadMovies());

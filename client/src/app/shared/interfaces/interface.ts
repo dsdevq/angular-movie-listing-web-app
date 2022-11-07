@@ -4,11 +4,21 @@ export interface IAppState {
   user: IUserState;
 }
 
+export interface IResponse {
+  message: string;
+  successful: boolean;
+}
+
 export interface IUser {
   email: string;
   expiresIn: string;
+  username: string;
   idToken: string;
   roles: string[];
+  movies: IMovie[];
+  tvShows: IMovie[];
+  suggestions: IMovie[];
+  manual_suggestions: IMovie[];
   // password: string;
 }
 export interface IMovieData {
@@ -121,6 +131,7 @@ export enum ESelectActions {
   LOAD = '[Select API] loadSelect',
   SUCC = '[Select API] loadSelect Success',
   FAIL = '[Select API] loadSelect Failure',
+  REMOVE = '[Select API] removeSelect',
 }
 
 export enum EMoviesTvShowsActions {
@@ -135,6 +146,10 @@ export enum EUserActions {
   LOAD = '[User] Login User',
   SUCC = '[User] Login User Success',
   FAIL = '[User] Login User Failure',
+  AUTH = '[User] Auth User',
+  ADD = '[User] Add Item',
+  ADD_SUCC = '[User] Add Item Success',
+  ADD_FAIL = '[User] Add Item Failure',
 }
 
 export enum EStatuses {

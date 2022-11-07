@@ -1,12 +1,7 @@
+import { IMovie, IResponse } from 'src/app/shared/interfaces/interface';
+import { IUser } from './../interfaces/interface';
 import { Router } from '@angular/router';
-import {
-  shareReplay,
-  tap,
-  Observable,
-  BehaviorSubject,
-  catchError,
-} from 'rxjs';
-import { IUser } from '../interfaces/interface';
+import { shareReplay, tap, Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -32,24 +27,25 @@ export class AuthService {
       })
       .pipe(
         tap((e) => {
-          console.log(e);
           this.setSession(e);
           this.route.navigate(['/dashboard']);
         }),
+        // tap((e) => {
+        //   this.setSession(e);
+        //   this.route.navigate(['/dashboard']);
+        // }),
         shareReplay()
       );
   }
   private setSession(authResult: IUser): void {
     localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', JSON.stringify(authResult.expiresIn));
-    localStorage.setItem('email', authResult.email);
-    localStorage.setItem('roles', JSON.stringify(authResult.roles));
     this._isLoggedIn$.next(true);
   }
 
   public logout(): void {
     localStorage.clear();
     this._isLoggedIn$.next(false);
+    this.route.navigate(['/']);
   }
 
   public isLoggedIn(): boolean {
@@ -58,5 +54,13 @@ export class AuthService {
       return !this.jwtService.isTokenExpired(token);
     }
     return false;
+  }
+
+  public getUserData(): Observable<IUser> {
+    return this.http.get<IUser>('http://localhost:5000/auth/data');
+  }
+
+  public addItem(movie: IMovie): Observable<IResponse> {
+    return this.http.post<IResponse>('http://localhost:5000/auth/movie', movie);
   }
 }

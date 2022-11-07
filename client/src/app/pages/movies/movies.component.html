@@ -1,2 +1,2 @@
-<app-page *ngIf="moviesInfo$ | async as movies" (loadMore)="handleClick()" [movies]="movies" heading="Movies">
+<app-page *ngIf="moviesInfo$ | async as movies" (loadMore)="handleClick()" [movies]="movies" [heading]="EPages.MOVIES">
 </app-page>

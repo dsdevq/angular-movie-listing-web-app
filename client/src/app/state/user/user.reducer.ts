@@ -1,4 +1,11 @@
-import { loginUser, loginUserSuccess, loginUserFailure } from './user.actions';
+import {
+  loginUser,
+  loginUserSuccess,
+  loginUserFailure,
+  addItem,
+  addItemSuccess,
+  addItemFailure,
+} from './user.actions';
 import {
   EStatuses,
   IUser,
@@ -28,6 +35,23 @@ export const userReducer = createReducer(
     status: EStatuses.SUCC,
   })),
   on(loginUserFailure, (state, { error }) => ({
+    ...state,
+    error,
+    status: EStatuses.FAIL,
+  })),
+  on(addItem, (state) => ({
+    ...state,
+    status: EStatuses.LOAD,
+  })),
+  on(addItemSuccess, (state, { item }) => ({
+    ...state,
+    user: {
+      ...state.user,
+      movies: [...state.user.movies, item],
+    },
+    status: EStatuses.SUCC,
+  })),
+  on(addItemFailure, (state, { error }) => ({
     ...state,
     error,
     status: EStatuses.FAIL,

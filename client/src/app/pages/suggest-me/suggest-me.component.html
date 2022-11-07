@@ -21,10 +21,10 @@
         <app-movie *ngFor="let movie of movies | filter:value" [isSuggest]="isSuggest" [movieProps]="movie"></app-movie>
       </section>
 
-      <div class="about-suggest__looking-for" *ngIf="value && (movies | filter:value).length">
+      <div class="about-suggest__looking-for" *ngIf="value && (movies | filter:value)?.length">
         <p>Didn't find the one you looking for?</p>
       </div>
-      <div class="about-results" *ngIf="value && !(movies | filter:value).length">
+      <div class="about-results" *ngIf="value && !(movies | filter:value)?.length">
         <h2 class="about-results__heading">Sorry, No results found</h2>
         <p class="about-results__description">There are no movies or TV shows matching your search terms. You can
           suggest

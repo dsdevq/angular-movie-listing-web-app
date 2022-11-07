@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { loginUserSuccess, authUser } from './../../state/user/user.actions';
 import { loadMovies, loadTvShows } from './../../state/movies/movies.actions';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
@@ -14,6 +14,10 @@ export class AppInitializerService {
     new Promise<void>((resolve) => {
       this.store.dispatch(loadMovies());
       this.store.dispatch(loadTvShows());
+      let token = localStorage.getItem('id_token');
+      if (token) {
+        this.store.dispatch(authUser());
+      }
       resolve();
     });
 }

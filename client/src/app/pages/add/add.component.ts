@@ -1,3 +1,4 @@
+import { addItem } from './../../state/user/user.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -37,5 +38,9 @@ export class AddComponent implements OnInit {
     if (this.searchInput.value.value.trim()) {
       this.value = this.searchInput.value.value;
     }
+  }
+  public handleOnAddMovie(movie: IMovie): void {
+    this.store.dispatch(addItem({ item: movie }));
+    console.log(movie);
   }
 }

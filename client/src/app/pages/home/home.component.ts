@@ -28,7 +28,7 @@ import {
 export class HomeComponent implements OnInit {
   public ENavItemsArray: string[];
   public inputField: FormGroup;
-  public value$: Observable<string>;
+  public value$: Observable<string> | null;
   public movies$: Observable<IMovie[]>;
   public selectedTab: string;
 

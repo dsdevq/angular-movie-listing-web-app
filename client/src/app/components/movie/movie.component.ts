@@ -1,6 +1,5 @@
-import { suggestMovieTvShow } from './../../state/movies/movies.actions';
 import { Store } from '@ngrx/store';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IAppState, IMovie } from 'src/app/shared/interfaces/interface';
 
 @Component({
@@ -13,6 +12,7 @@ export class MovieComponent implements OnInit {
   @Input() public isSuggest: boolean;
   @Input() public isAddToList: boolean;
 
+  @Output() public addMovie = new EventEmitter();
   public link: string;
 
   constructor(private store: Store<IAppState>) {}
@@ -24,7 +24,8 @@ export class MovieComponent implements OnInit {
   private initMovie(): void {
     this.link = `/${this.movieProps.type}/${this.movieProps.id}`;
   }
-  public handleClick(id: number): void {
-    this.store.dispatch(suggestMovieTvShow({ id }));
+  public handleClick(movie: IMovie): void {
+    this.addMovie.emit(movie);
+    // this.store.dispatch(suggestMovieTvShow({ id }));
   }
 }

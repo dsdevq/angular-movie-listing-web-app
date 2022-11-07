@@ -44,7 +44,6 @@ const tokenGetter = () => {
     AppComponent,
     HeaderComponent,
     Error404Component,
-    LoadingImgDirective,
     NavItemComponent,
   ],
   imports: [

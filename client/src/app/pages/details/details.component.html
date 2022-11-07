@@ -1,8 +1,8 @@
-<section class="details" *ngIf="(status$ | async) === EStatus.SUCC; else loader">
-  <div class="details__container" *ngIf="(selectedItem$ | async) as item">
+<!-- <section class="details" *ngIf="(status$ | async) === EStatus.SUCC; else loader"> -->
+<section class="details">
+  <div class="details__container" *ngIf="selectedItem$ | async as item">
     <div class="details__image background-image">
-      <img appLoadingImg loader="'../../../assets/loader.gif'" onErrorSrc="'../../../assets/error.png'"
-        class="background-image__image" [src]="item.backdrop_path" [alt]="item.title">
+      <img class="background-image__image" [src]="item.backdrop_path" [alt]="item.title">
       <article class="background-image__label">
         <div class="background-image__box">
           <a class="background-image__link" routerLink="/">MaileHereko</a>
@@ -14,8 +14,7 @@
     </div>
     <div class="details__content content-details">
       <picture class="content-details__poster">
-        <img appLoadingImg loader="'../../../assets/loader.gif'" onErrorSrc="'../../../assets/error.png'"
-          [src]="item.poster_path" [alt]="item.title">
+        <img [src]="item.poster_path" [alt]="item.title">
       </picture>
       <div class="content-details__information information-box">
         <h3 class="information-box__overview">{{item.tagline || item.title}}</h3>
@@ -71,6 +70,3 @@
     </div>
   </div>
 </section>
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>

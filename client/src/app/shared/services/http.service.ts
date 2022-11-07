@@ -96,4 +96,8 @@ export class HttpService {
         return this.store.select(selectMoviesAndTvShows);
     }
   }
+
+  public add(movie: IMovie) {
+    return this.http.post(`localhost:5000/post/movie/${movie.id}`, movie);
+  }
 }

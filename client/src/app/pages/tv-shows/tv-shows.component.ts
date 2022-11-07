@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IAppState, IMovie } from 'src/app/shared/interfaces/interface';
+import { EPages, IAppState, IMovie } from 'src/app/shared/interfaces/interface';
 import { selectAllTvShows } from 'src/app/state/movies/movies.selectors';
 import { loadTvShows } from 'src/app/state/movies/movies.actions';
 
@@ -12,6 +12,7 @@ import { loadTvShows } from 'src/app/state/movies/movies.actions';
 })
 export class TvShowsComponent implements OnInit {
   public tvShowsInfo$: Observable<IMovie[]>;
+  public EPages = EPages;
 
   constructor(private store: Store<IAppState>) {}
 
