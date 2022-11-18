@@ -47,12 +47,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.selectedItem$ = this.store.select(selectItemData);
     this.status$ = this.store.select(getSelectStatus);
     this.route.params.pipe(take(1)).subscribe((e) => {
-      let itemType = e['type'];
-      let url = `/${itemType}/${e['id']}`;
+      let { id, type } = e;
       this.store.dispatch(
         loadSelect({
-          url,
-          itemType,
+          url: `/${type}/${id}`,
+          itemType: type,
         })
       );
     });

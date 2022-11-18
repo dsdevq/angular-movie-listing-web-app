@@ -1,0 +1,42 @@
+@import "../../../_variables.scss";
+$width: 486px;
+
+.sign-up {
+  &__container {
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 120px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 126px;
+    > * {
+      flex: 1 1 40%;
+      max-width: $width;
+    }
+    @media (max-width: 768px) {
+      gap: 70px;
+      justify-content: center;
+    }
+  }
+  &__image {
+    img {
+      max-height: 584px;
+      width: 100%;
+    }
+  }
+}
+.form-sign-up {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  &__fieldset {
+    display: inherit;
+    flex-direction: inherit;
+    gap: 16px;
+  }
+  &__status {
+    color: $primary-500;
+    font-size: 2em;
+  }
+}

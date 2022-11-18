@@ -13,8 +13,8 @@
       </section>
     </header>
     <section *ngIf="movies$ | async as movies; else loader" class="movie-list">
-      <app-movie *ngFor="let movie of movies | filter:value" (addMovie)="handleOnAddMovie($event)" [movieProps]="movie"
-        [isAddToList]="isAddToList">
+      <app-movie *ngFor="let movie of movies | filter:value trackBy: trackByMovies"
+        (addMovie)="handleOnAddMovie($event)" [movieProps]="movie" [isAddToList]="isAddToList">
       </app-movie>
     </section>
     <ng-template #loader>

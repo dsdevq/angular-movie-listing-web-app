@@ -1,7 +1,8 @@
 <mat-card class="card" *ngIf="movieProps">
   <div class="card__image">
     <a [routerLink]="link">
-      <img mat-card-image [src]="movieProps.poster_path" [alt]="movieProps.title">
+      <img mat-card-image errorSrc="../../../assets/bgPlaceholder.png" loader="../../../assets/bgPlaceholder.png"
+        [src]="movieProps.poster_path" [alt]="movieProps.title">
     </a>
     <app-rating class="card__rating">
       {{movieProps.vote_average}}
@@ -13,17 +14,16 @@
     </span>
     <ng-container>
 
-      <p *ngIf="isSuggest" (click)="handleClick(movieProps)" [ngClass]="{'suggested': movieProps.suggested}"
-        class="card__suggest">
-        <mat-icon>{{movieProps.suggested ? 'check_circle' :'thumb_up' }}</mat-icon>
-        {{ movieProps.suggested ? 'Already watched' : 'Suggest me' }}
-      </p>
+      <button *ngIf="isSuggest" [disabled]="movieProps.isManualSuggestion" (click)="handleClick(movieProps)"
+        [ngClass]="{'isSuggested': movieProps.isManualSuggestion}" class="card__suggest">
+        <mat-icon>{{movieProps.isManualSuggestion ? 'check_circle' :'thumb_up' }}</mat-icon>
+        {{ movieProps.isManualSuggestion ? 'Already suggested' : 'Suggest me' }}
+      </button>
 
-      <p *ngIf="isAddToList" (click)="handleClick(movieProps)" [ngClass]="{'suggested': movieProps.suggested}"
-        class="card__suggest">
-        <mat-icon>{{movieProps.suggested ? 'check_circle' :'add' }}</mat-icon>
-        {{ movieProps.suggested ? 'Already watched' : 'Add to my list' }}
-      </p>
+      <button *ngIf="isAddToList" (click)="handleClick(movieProps)" class="card__suggest">
+        <mat-icon> {{movieProps.isAdded ? 'close' : 'add'}}</mat-icon>
+        {{ movieProps.isAdded ? 'Remove from list' : 'Add to my list' }}
+      </button>
 
     </ng-container>
   </mat-card-content>

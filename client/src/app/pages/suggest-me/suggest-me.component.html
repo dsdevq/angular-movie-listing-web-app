@@ -8,8 +8,8 @@
           watch.
         </p>
         <form [formGroup]="searchInput" (ngSubmit)="handleSubmit()" class="search">
-          <app-input class="about-suggest__form" [label]="EInputSettings.LABEL"
-            [placeholder]="EInputSettings.PLACEHOLDER" [prefix]="EInputSettings.PREFIX" formControlName="value">
+          <app-input formControlName="value" class="about-suggest__form" [label]="EInputSettings.LABEL"
+            [placeholder]="EInputSettings.PLACEHOLDER" [prefix]="EInputSettings.PREFIX">
           </app-input>
           <app-button action="submit">Search</app-button>
         </form>
@@ -18,7 +18,8 @@
     <ng-container *ngIf="movies$ | async as movies; else loader">
 
       <section class="movie-list">
-        <app-movie *ngFor="let movie of movies | filter:value" [isSuggest]="isSuggest" [movieProps]="movie"></app-movie>
+        <app-movie *ngFor="let movie of movies | filter:value" [isSuggest]="isSuggest" [movieProps]="movie"
+          (addMovie)="handleOnSuggestMovie($event)"></app-movie>
       </section>
 
       <div class="about-suggest__looking-for" *ngIf="value && (movies | filter:value)?.length">
@@ -33,6 +34,7 @@
       <div class="button__box" *ngIf="value">
         <app-button class="load-button">Suggest Manually</app-button>
       </div>
+
     </ng-container>
     <ng-template #loader>
       <app-loader></app-loader>

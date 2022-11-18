@@ -25,7 +25,6 @@ import { MovieEffects } from './state/movies/movies.effects';
 import { IAppState } from './shared/interfaces/interface';
 import { environment } from 'src/environments/environment';
 import { Error404Component } from './pages/error404/error404.component';
-import { LoadingImgDirective } from './shared/directives/loading-img.directive';
 import { userReducer } from './state/user/user.reducer';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NavItemComponent } from './components/nav-items/nav-items.component';
@@ -35,9 +34,7 @@ export const initializeApp =
   (): Promise<void> =>
     appInitService.init();
 
-const tokenGetter = () => {
-  return localStorage.getItem('id_token');
-};
+const tokenGetter = () => localStorage.getItem('id_token');
 
 @NgModule({
   declarations: [

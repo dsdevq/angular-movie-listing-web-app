@@ -6,9 +6,17 @@ import {
   IAppState,
 } from '../../shared/interfaces/interface';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import {
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
+
+interface ILoginCreds {
+  email: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-login',
@@ -18,25 +26,23 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginComponent implements OnInit {
   public EInputEmail = EInputSettingsEmail;
   public EInputPassword = EInputSettingsPassword;
-  public form: FormGroup;
+  public form: FormGroup<ILoginCreds>;
 
   constructor(
-    private fb: FormBuilder,
-    private store: Store<IAppState> // private authService: AuthService, // private router: Router
+    private fb: NonNullableFormBuilder,
+    private store: Store<IAppState>
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.maxLength(5)]],
     });
   }
 
   public login() {
-    const { email, password } = this.form.value;
-
-    if (email && password) {
-      this.store.dispatch(loginUser({ email, password }));
+    if (this.form.valid) {
+      this.store.dispatch(loginUser({ ...this.form.getRawValue() }));
     }
   }
 }

@@ -28,7 +28,7 @@ $movie-listing-web-app-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 @import "reset.scss";
-@import "_variables.scss";
+@import "variables";
 html {
   font-size: 16px;
   scroll-behavior: smooth;

@@ -1,8 +1,11 @@
+import { UiDataService } from './../../shared/services/ui-data.service';
+import { selectUserManualSuggestions } from './../../state/user/user.selectors';
+import { suggestItem } from './../../state/user/user.actions';
 import { ESearchInputSettings } from '../../shared/interfaces/interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { selectMoviesAndTvShows } from 'src/app/state/movies/movies.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, map, combineLatest } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { IAppState, IMovie } from 'src/app/shared/interfaces/interface';
 
@@ -18,21 +21,39 @@ export class SuggestMeComponent implements OnInit {
   public EInputSettings = ESearchInputSettings;
   public isSuggest: boolean;
 
-  constructor(private store: Store<IAppState>, private fb: FormBuilder) {}
+  constructor(
+    private store: Store<IAppState>,
+    private uiDataService: UiDataService
+  ) {}
 
   ngOnInit(): void {
     this.initPage();
   }
   private initPage(): void {
-    this.movies$ = this.store.select(selectMoviesAndTvShows);
-    this.searchInput = this.fb.group({
-      value: '',
-    });
+    const items$ = this.store.select(selectMoviesAndTvShows);
+    const userItems$ = this.store.select(selectUserManualSuggestions);
+
+    this.movies$ = combineLatest([items$, userItems$]).pipe(
+      map(([items, userItems]) =>
+        !userItems
+          ? items
+          : items.map((movie: IMovie) => {
+              let find = userItems.find((e: IMovie) => e.id === movie.id);
+              return {
+                ...movie,
+                isManualSuggestion: find?.isManualSuggestion,
+              };
+            })
+      )
+    );
+    this.searchInput = this.uiDataService.inputField();
     this.isSuggest = true;
   }
   public handleSubmit(): void {
-    if (this.searchInput.value.value.trim()) {
-      this.value = this.searchInput.value.value;
-    }
+    this.value = this.searchInput.value.value;
+  }
+
+  public handleOnSuggestMovie(movie: IMovie): void {
+    this.store.dispatch(suggestItem({ item: movie }));
   }
 }

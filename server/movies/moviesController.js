@@ -1,58 +1,81 @@
 const User = require('../models/User');
-const Role = require('../models/Role');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { secret } = require('../config');
-
-const generateAccessToken = (id, roles) => {
-	const payload = {
-		id,
-		roles,
-	};
-	// return jwt.sign(payload, secret, { expiresIn: '24h' });
-	expiresIn = '24h';
-	return {
-		idToken: jwt.sign(payload, secret, { expiresIn }),
-		expiresIn: expiresIn,
-	};
-};
 
 class moviesController {
-	async suggest(req, res) {
+	async postNewItem(req, res) {
 		try {
-			const movie = req.body;
-
-			if (!req.user) {
-				res.status(401).json({ message: movie });
-				res.status(401).json({ message: 'Please, login!' });
+			let { id } = req.user;
+			const user = await User.findById(id);
+			if (!user) {
+				res.status(404).json({ message: 'No user' });
 			}
-			return res.status(200).json({ message: id, isSuggested });
-
-			// const candidate = await User.findOne({ email });
-			// if (candidate) {
-			// 	return res
-			// 		.status(400)
-			// 		.json({ message: 'User with such email is already exists' });
-			// }
-			// const hashPassword = bcrypt.hashSync(password, 7);
-			// const userRole = await Role.findOne({ value: 'USER' });
-
-			// const user = new User({
-			// 	email,
-			// 	password: hashPassword,
-			// 	roles: [userRole.value],
-			// });
-			// console.log(user);
-
-			// await user.save();
-
-			// return res.json({ message: 'User has been successfully registered' });
+			const item = { ...req.body, isAdded: true };
+			if (item.type === 'movie') {
+				await User.updateOne(
+					{ _id: user._id },
+					{
+						$push: {
+							movies: item,
+						},
+					}
+				);
+			}
+			if (item.type === 'tv') {
+				await User.updateOne(
+					{ _id: user._id },
+					{
+						$push: {
+							tvShows: item,
+						},
+					}
+				);
+			}
+			return res
+				.status(200)
+				.json({ message: `item successfully added`, successful: true });
 		} catch (error) {
 			console.log(error);
+		}
+	}
+	async suggestSomeone(req, res) {
+		try {
+			let authUser = req.user;
+			const user = authUser && (await User.findById(authUser.id));
+			const item = { ...req.body };
 
-			res.status(400).json({
-				message: `Registration Error - ${error}}`,
-			});
+			if (!user) {
+				await User.updateOne(
+					{ username: 'Admin' },
+					{
+						$push: {
+							suggestions: { ...item, isSuggested: true },
+						},
+					}
+				);
+				return res
+					.status(200)
+					.json({ message: `item successfully added`, successful: true });
+			}
+			await User.updateOne(
+				{ _id: user._id },
+				{
+					$push: {
+						manual_suggestions: { ...item, isManualSuggestion: true },
+					},
+				}
+			);
+			await User.updateOne(
+				{ username: 'Admin' },
+				{
+					$push: {
+						suggestions: { ...item, isSuggested: true },
+					},
+				}
+			);
+			return res
+				.status(200)
+				.json({ message: `item successfully added`, successful: true });
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }

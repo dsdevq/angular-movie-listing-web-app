@@ -21,6 +21,7 @@ $background: #20283e;
     position: relative;
     overflow: hidden;
     img {
+      aspect-ratio: 2/3;
       max-width: 500px;
       transition: 0.3s;
       width: 100%;
@@ -55,12 +56,22 @@ $background: #20283e;
     color: $primary-400;
     align-items: center;
     gap: 8px;
-    &:hover {
-      cursor: pointer;
-    }
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
-.suggested {
+.isSuggested {
   color: $success-400;
+}
+
+button {
+  background-color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+  }
 }

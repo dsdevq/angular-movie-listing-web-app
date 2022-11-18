@@ -20,16 +20,21 @@ const generateAccessToken = (id, roles) => {
 class authController {
 	async registration(req, res) {
 		try {
-			const errors = validationResult(req);
-			if (!errors.isEmpty()) {
-				return res.status(400).json({ message: 'Registration failed', errors });
+			const error = validationResult(req);
+			if (!error.isEmpty()) {
+				return res.status(400).json({
+					message: `Registration failed ${error.errors[0].msg}`,
+				});
 			}
 			const { email, password, username } = req.body;
-			const candidate = await User.findOne({ email });
-			if (candidate) {
-				return res
-					.status(400)
-					.json({ message: 'User with such email is already exists' });
+			const candidateEmail = await User.findOne({ email });
+			const candidateUsername = await User.findOne({ username });
+			if (candidateEmail || candidateUsername) {
+				return res.status(400).json({
+					message: `User with such ${
+						candidateEmail ? 'email' : 'username'
+					} is already exists`,
+				});
 			}
 			const hashPassword = bcrypt.hashSync(password, 7);
 			const userRole = await Role.findOne({ value: 'USER' });
@@ -47,12 +52,12 @@ class authController {
 
 			await user.save();
 
-			return res.json({ message: 'User has been successfully registered' });
+			return res.json({
+				message: 'User has been successfully registered',
+			});
 		} catch (error) {
-			console.log(error);
-
 			res.status(400).json({
-				message: `Registration Error - ${error}}`,
+				message: `Registration Error ${error}}`,
 			});
 		}
 	}
@@ -71,6 +76,7 @@ class authController {
 			const token = generateAccessToken(user._id, user.roles);
 			return res.status(200).json({
 				...token,
+				username: user.username,
 				email: user.email,
 				roles: user.roles,
 				movies: user.movies,
@@ -92,65 +98,6 @@ class authController {
 			}
 			res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
 			res.json(user);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	async postNewItem(req, res) {
-		try {
-			let authorizedUser = req.user;
-			const user = await User.findById(authorizedUser.id);
-			if (!user) {
-				res.status(404).json({ message: 'No user' });
-			}
-			const item = req.body;
-			if (item.type === 'movie') {
-				await User.updateOne(
-					{ _id: user._id },
-					{
-						$push: {
-							movies: item,
-						},
-					}
-				);
-			}
-			if (item.type === 'tv') {
-				await User.updateOne(
-					{ _id: user._id },
-					{
-						$push: {
-							tvShows: item,
-						},
-					}
-				);
-			}
-			return res
-				.status(200)
-				.json({ message: `item successfully added`, successful: true });
-		} catch (error) {
-			console.log(error);
-		}
-	}
-	async suggestSomeone(req, res) {
-		try {
-			let authorizedUser = req.user;
-			const user = await User.findById(authorizedUser.id);
-			if (!user) {
-				res.status(404).json({ message: 'No user' });
-			}
-			const item = req.body;
-			await User.updateOne(
-				{ _id: user._id },
-				{
-					$push: {
-						manual_suggestions: item,
-					},
-				}
-			);
-			return res
-				.status(200)
-				.json({ message: `item successfully added`, successful: true });
 		} catch (error) {
 			console.log(error);
 		}

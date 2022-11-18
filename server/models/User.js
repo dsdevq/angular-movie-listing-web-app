@@ -9,6 +9,8 @@ const User = new Schema({
 	suggestions: [{ type: Object, ref: 'Movie' }],
 	manual_suggestions: [{ type: Object, ref: 'Movie' }],
 	roles: [{ type: String, ref: 'Role' }],
+	isActivated: { type: Boolean, default: false },
+	activationLink: { type: String },
 });
 
 module.exports = model('User', User);

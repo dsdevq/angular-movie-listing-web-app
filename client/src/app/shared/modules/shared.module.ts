@@ -1,3 +1,4 @@
+import { NoItemsComponent } from './../../components/no-items/no-items.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,6 +34,7 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
     MovieComponent,
     RatingComponent,
     LoaderComponent,
+    NoItemsComponent,
 
     GenresPipe,
     FilterPipe,
@@ -61,6 +63,7 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
     FilterPipe,
     ToggleDirective,
     LoadingImgDirective,
+    NoItemsComponent,
   ],
 })
 export class SharedModule {}

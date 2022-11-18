@@ -12,7 +12,7 @@ import {
 export class LoadingImgDirective {
   constructor(
     @Attribute('loader') public loader: string,
-    @Attribute('error') public error: string,
+    @Attribute('errorSrc') public errorSrc: string,
     private renderer: Renderer2,
     private el: ElementRef
   ) {
@@ -28,6 +28,6 @@ export class LoadingImgDirective {
   }
 
   @HostListener('error') onError(): void {
-    this.renderer.setAttribute(this.el.nativeElement, 'src', this.error);
+    this.renderer.setAttribute(this.el.nativeElement, 'src', this.errorSrc);
   }
 }

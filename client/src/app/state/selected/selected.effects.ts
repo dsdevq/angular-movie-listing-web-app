@@ -10,15 +10,15 @@ import { catchError, map, of, switchMap } from 'rxjs';
 export class SelectEffects {
   selectItem$ = createEffect(() =>
     this.actions$.pipe(ofType(loadSelect)).pipe(
-      switchMap((data) =>
+      switchMap(({ url, itemType }) =>
         // Call the getMovies method, it returns an observable
-        this.http.getItem(data.url).pipe(
+        this.http.getItemDetails(url).pipe(
           // Take the returned value and return a new success action containing movies
           map((item) =>
             loadSelectSucc({
               selected: {
                 ...item,
-                type: data.itemType,
+                type: itemType,
                 title: item.name || item.title,
               },
             })
