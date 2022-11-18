@@ -5,9 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TypePipe implements PipeTransform {
   transform(value: string, arg: number): string {
-    if (!value) {
-      return '';
-    }
     if (value.toLowerCase() === 'tv') {
       value = 'TV Show';
     } else {

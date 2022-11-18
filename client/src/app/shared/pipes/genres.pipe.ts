@@ -5,5 +5,5 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class GenresPipe implements PipeTransform {
   transform = (value: { id: number; name: string }[]): string =>
-    value ? value.map((el) => el.name).join(', ') : value;
+    value.map((el) => el.name).join(', ');
 }

@@ -6,17 +6,9 @@ import {
   IAppState,
 } from '../../shared/interfaces/interface';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
-
-interface ILoginCreds {
-  email: FormControl<string>;
-  password: FormControl<string>;
-}
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,23 +18,33 @@ interface ILoginCreds {
 export class LoginComponent implements OnInit {
   public EInputEmail = EInputSettingsEmail;
   public EInputPassword = EInputSettingsPassword;
-  public form: FormGroup<ILoginCreds>;
+  public form: FormGroup;
 
   constructor(
-    private fb: NonNullableFormBuilder,
-    private store: Store<IAppState>
-  ) {}
+    private fb: FormBuilder,
+    private store: Store<IAppState> // private authService: AuthService,
+  ) // private router: Router
+  {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.maxLength(5)]],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
   public login() {
-    if (this.form.valid) {
-      this.store.dispatch(loginUser({ ...this.form.getRawValue() }));
+    const { email, password } = this.form.value;
+    console.log(email, password);
+
+    if (email && password) {
+      this.store.dispatch(loginUser({ email, password }));
+      // this.authService.login(email, password).subscribe((e) => {
+      //   console.log('LOGIN', e);
+      //   console.log('User is logged in');
+
+      //   this.router.navigateByUrl('/');
+      // });
     }
   }
 }

@@ -1,10 +1,10 @@
-import { NoItemsComponent } from './../../components/no-items/no-items.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageComponent } from '../../components/page/page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button.component';
+import { MovieListComponent } from '../../components/movie-list/movie-list.component';
 import { InputComponent } from '../../components/input/input.component';
 import { MaterialModule } from './material.module';
 import { MovieComponent } from '../../components/movie/movie.component';
@@ -16,7 +16,6 @@ import { UrlPipe } from '../pipes/url.pipe';
 import { TypePipe } from '../pipes/type.pipe';
 import { GenresPipe } from '../pipes/genres.pipe';
 import { ToggleDirective } from '../directives/toggle.directive';
-import { LoadingImgDirective } from '../directives/loading-img.directive';
 
 @NgModule({
   imports: [
@@ -30,18 +29,17 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
   declarations: [
     PageComponent,
     ButtonComponent,
+    MovieListComponent,
     InputComponent,
     MovieComponent,
     RatingComponent,
     LoaderComponent,
-    NoItemsComponent,
 
     GenresPipe,
     FilterPipe,
     UrlPipe,
     TypePipe,
     ToggleDirective,
-    LoadingImgDirective,
   ],
   exports: [
     CommonModule,
@@ -57,13 +55,11 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
     RatingComponent,
     PageComponent,
     ButtonComponent,
+    MovieListComponent,
     MovieComponent,
     InputComponent,
     LoaderComponent,
     FilterPipe,
-    ToggleDirective,
-    LoadingImgDirective,
-    NoItemsComponent,
   ],
 })
 export class SharedModule {}

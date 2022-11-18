@@ -6,7 +6,7 @@
     top: 75px;
     background-color: lighten($color: $backgroundColor, $amount: 10%);
     ::ng-deep.mat-drawer-inner-container {
-      max-width: 200px;
+      min-width: 200px;
       > a {
         display: block;
       }

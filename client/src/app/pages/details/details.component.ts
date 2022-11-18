@@ -2,10 +2,7 @@ import {
   getSelectStatus,
   selectItemData,
 } from '../../state/selected/selected.selectors';
-import {
-  loadSelect,
-  removeSelect,
-} from '../../state/selected/selected.actions';
+import { loadSelect } from '../../state/selected/selected.actions';
 import { Store } from '@ngrx/store';
 import {
   IAppState,
@@ -14,8 +11,8 @@ import {
   EMovieTypes,
 } from '../../shared/interfaces/interface';
 import { HttpService } from '../../shared/services/http.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, take } from 'rxjs';
 
 @Component({
@@ -23,35 +20,33 @@ import { Observable, take } from 'rxjs';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit, OnDestroy {
-  public selectedItem$: Observable<IMovieDetails>;
-  public status$: Observable<string>;
+export class DetailsComponent implements OnInit {
+  public selectedItem$: Observable<IMovieDetails> =
+    this.store.select(selectItemData);
 
+  public status$: Observable<string> = this.store.select(getSelectStatus);
   public EStatus = EStatuses;
   public EMovieType = EMovieTypes;
+  public type: string;
 
   constructor(
     public http: HttpService,
-    private route: ActivatedRoute,
+    private routeUrl: Router,
+    private routeType: ActivatedRoute,
     private store: Store<IAppState>
   ) {}
 
   ngOnInit(): void {
     this.initDetails();
   }
-  ngOnDestroy(): void {
-    this.store.dispatch(removeSelect());
-  }
-
   private initDetails(): void {
-    this.selectedItem$ = this.store.select(selectItemData);
-    this.status$ = this.store.select(getSelectStatus);
-    this.route.params.pipe(take(1)).subscribe((e) => {
-      let { id, type } = e;
+    this.routeType.params.pipe(take(1)).subscribe((e) => {
+      this.type = e['type'];
+
       this.store.dispatch(
         loadSelect({
-          url: `/${type}/${id}`,
-          itemType: type,
+          url: this.routeUrl.url,
+          itemType: this.type,
         })
       );
     });

@@ -1,3 +1,2 @@
-<app-page (loadMore)="handleClick()" [movies]="tvShowsInfo$ | async" [heading]="EPages.TV_SHOWS"
-  [isLogged]="isLogged$ | async">
+<app-page *ngIf="tvShowsInfo$ | async as tvShows" (loadMore)="handleClick()" [movies]="tvShows" heading="TV Shows">
 </app-page>

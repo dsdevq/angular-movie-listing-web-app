@@ -12,14 +12,21 @@
         </form>
       </section>
     </header>
-    <section *ngIf="movies$ | async as movies; else loader" class="movie-list">
-      <app-movie *ngFor="let movie of movies | filter:value trackBy: trackByMovies"
-        (addMovie)="handleOnAddMovie($event)" [movieProps]="movie" [isAddToList]="isAddToList">
-      </app-movie>
-    </section>
-    <ng-template #loader>
-      <app-loader></app-loader>
-    </ng-template>
-
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-movie-list *ngIf="value" [movies]="movies | filter:value">
+      </app-movie-list>
+      <!-- <div class="about-add__looking-for" *ngIf="value && (movies | filter:value)?.length">
+        <p>Didn't find the one you looking for?</p>
+      </div>
+      <div class="about-results" *ngIf="value && !(movies | filter:value)?.length">
+        <h2 class="about-results__heading">Sorry, No results found</h2>
+        <p class="about-results__description">There are no movies or TV shows matching your search terms. You can
+          add
+          me manually</p>
+      </div>
+      <div class="button__box" *ngIf="value">
+        <app-button class="load-button">add Manually</app-button>
+      </div> -->
+    </ng-container>
   </div>
 </section>

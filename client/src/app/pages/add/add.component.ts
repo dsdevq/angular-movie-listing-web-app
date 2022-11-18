@@ -1,11 +1,7 @@
-import { UiDataService } from './../../shared/services/ui-data.service';
-import { selectUserTvShows } from 'src/app/state/user/user.selectors';
-import { selectUserMovies } from './../../state/user/user.selectors';
-import { addItem } from './../../state/user/user.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { map, Observable, switchMap, zip } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ESearchInputSettings,
   IAppState,
@@ -22,48 +18,22 @@ export class AddComponent implements OnInit {
   public movies$: Observable<IMovie[]>;
   public searchInput: FormGroup;
   public value: string;
-  public isAddToList: boolean;
   public EInputSettings = ESearchInputSettings;
 
-  constructor(
-    private store: Store<IAppState>,
-    private uiDataService: UiDataService
-  ) {}
+  constructor(private store: Store<IAppState>, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initPage();
   }
   private initPage(): void {
-    this.movies$ = this.store
-      .select(selectMoviesAndTvShows)
-      .pipe(
-        switchMap((movies) =>
-          zip(
-            this.store.select(selectUserMovies),
-            this.store.select(selectUserTvShows)
-          ).pipe(
-            map(([userMovies, userTvShows]) =>
-              movies.filter(
-                (m) =>
-                  ![...userMovies, ...userTvShows].find((e) => e.id === m.id)
-                    ?.isAdded
-              )
-            )
-          )
-        )
-      );
-
-    this.searchInput = this.uiDataService.inputField();
-    this.isAddToList = true;
+    this.movies$ = this.store.select(selectMoviesAndTvShows);
+    this.searchInput = this.fb.group({
+      value: '',
+    });
   }
   public handleSubmit(): void {
-    this.value = this.searchInput.value.value;
-  }
-  public handleOnAddMovie(movie: IMovie): void {
-    this.store.dispatch(addItem({ item: movie }));
-  }
-
-  public trackByMovies(_index: number, item: IMovie): number {
-    return item.id;
+    if (this.searchInput.value.value.trim()) {
+      this.value = this.searchInput.value.value;
+    }
   }
 }

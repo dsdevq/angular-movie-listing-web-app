@@ -1,7 +1,8 @@
 <section class="login">
   <div class="login__container">
     <picture class="login__image">
-      <img src="../../../assets/login.svg" alt="Login">
+      <img appLoadingImg src="../../../assets/login.svg" loader="'../../../assets/loader.gif'"
+        onErrorSrc="'../../../assets/error.png'" alt="Login">
     </picture>
     <form [formGroup]="form" (ngSubmit)="login()" class="login__form form-login">
       <h2 class="form-login__heading">Login</h2>

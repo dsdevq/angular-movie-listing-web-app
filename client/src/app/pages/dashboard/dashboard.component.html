@@ -1,59 +1,58 @@
 <section class="dashboard">
   <div class="dashboard__container">
-    <ng-container *ngIf="user$ | async as user">
-      <article class="dashboard__welcome welcome-dashboard">
-        <h2 class="welcome-dashboard__heading">
-          Welcome, {{user.username}}
-        </h2>
-        <ul class="welcome-dashboard__userdata userdata">
-          <li class="userdata__item">
-            <span class="userdata__item-info">
-              {{user.movies.length}}
-            </span>
-            <a [routerLink]="EPage.MOVIES | url:true" class="userdata__item-caption">
-              {{ EPage.MOVIES }}
-            </a>
-          </li>
-          <li class="userdata__item">
-            <span class="userdata__item-info">
-              {{user.tvShows.length}}
-            </span>
-            <a [routerLink]="EPage.TV_SHOWS | url:true" class="userdata__item-caption">
-              {{EPage.TV_SHOWS}}
-            </a>
-          </li>
-          <li class="userdata__item">
-            <span class="userdata__item-info">
-              {{user.suggestions.length}}
-            </span>
-            <a [routerLink]="EPage.SUGGESTIONS | url:true" class="userdata__item-caption">
-              {{EPage.SUGGESTIONS}}
-            </a>
-          </li>
-          <li class="userdata__item">
-            <span class="userdata__item-info">
-              {{user.manual_suggestions.length}}
-            </span>
-            <a [routerLink]="EPage.SUGGEST | url:true" class="userdata__item-caption">
-              Manual suggestions
-            </a>
-          </li>
-        </ul>
-      </article>
-    </ng-container>
-    <article class="dashboard__quick quick-links">
+    <article class="dashboard__welcome welcome-dashboard">
+      <h2 class="welcome-dashboard__heading">
+        Welcome USERNAME
+      </h2>
+      <ul class="welcome-dashboard__userdata userdata">
+        <!-- ! TODO NGFOR -->
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            93
+          </span>
+          <h5 class="userdata__item-caption">
+            Movies
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            26
+          </span>
+          <h5 class="userdata__item-caption">
+            Shows
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            7
+          </span>
+          <h5 class="userdata__item-caption">
+            Suggestions
+          </h5>
+        </li>
+        <li class="userdata__item">
+          <span class="userdata__item-info">
+            3
+          </span>
+          <h5 class="userdata__item-caption">
+            Manual suggestions
+          </h5>
+        </li>
+      </ul>
+    </article>
+    <article class="dashboard__links quick-links">
       <h5 class="quick-links__header">
         Quick links
       </h5>
       <ul class="quick-links__menu menu-links">
-        <li class="menu-links__item">
-          <a class="menu-links__link" [routerLink]="EPage.SUGGESTIONS | url:true">
-            {{EPage.SUGGESTIONS}}
+        <li class="menu-links__link">
+          <a [routerLink]="['/suggestions']">
+            Suggestions
           </a>
         </li>
-        <li class="menu-links__item">
-          <a class="menu-links__link" [routerLink]="EPage.ADD | url:true">
-            {{EPage.ADD}}
+        <li class=" menu-links__link">
+          <a [routerLink]="['/add']" class="">
+            Add
           </a>
         </li>
       </ul>

@@ -16,5 +16,3 @@ export const loadSelectFail = createAction(
   ESelectActions.FAIL,
   props<{ error: string }>()
 );
-
-export const removeSelect = createAction(ESelectActions.REMOVE);

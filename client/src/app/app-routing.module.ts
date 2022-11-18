@@ -2,7 +2,6 @@ import { Error404Component } from './pages/error404/error404.component';
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -39,7 +38,6 @@ const routes: Routes = [
   },
   {
     path: 'suggestions',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/suggestions/suggestions.module').then(
         (m) => m.SuggestionsModule
@@ -47,22 +45,15 @@ const routes: Routes = [
   },
   {
     path: 'add',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/add/add.module').then((m) => m.AddModule),
   },
   {
     path: 'dashboard',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
-  },
-  {
-    path: 'sign-up',
-    loadChildren: () =>
-      import('./pages/sign-up/sign-up.module').then((m) => m.SignUpModule),
   },
   { path: '**', component: Error404Component },
 ];
