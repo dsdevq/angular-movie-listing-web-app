@@ -1,7 +1,7 @@
 import { UiDataService } from './shared/services/ui-data.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable } from 'rxjs';
+import { EPages } from './shared/interfaces/interface';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +9,21 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit, OnInit {
-  @ViewChild('sidenav')
-  public sidenav: MatSidenav;
+  @ViewChild('sidenav') public sidenav: MatSidenav;
 
-  public list$: Observable<string[]>;
+  public list: string[];
+  public EPage = EPages;
 
-  constructor(private uiService: UiDataService) {}
+  constructor(private ui: UiDataService) {}
 
   ngOnInit(): void {
     this.initApp();
   }
   private initApp(): void {
-    this.list$ = this.uiService.navList$;
+    this.list = this.ui.list;
   }
 
   ngAfterViewInit(): void {
-    this.uiService.setSidenav(this.sidenav);
+    this.ui.setSidenav(this.sidenav);
   }
 }

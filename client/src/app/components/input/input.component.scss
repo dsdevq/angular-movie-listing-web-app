@@ -7,6 +7,7 @@
 
 :host::ng-deep .mat-form-field {
   display: block;
+  // max-width: 384px;
   // Placeholder color, color, border color
   input::placeholder,
   .mat-input-element,
@@ -22,7 +23,7 @@
   }
   .mat-form-field-wrapper {
     margin: 0;
-    // padding-bottom: 0;
+    padding-bottom: 0;
   }
   .mat-form-field-prefix,
   .mat-form-field-suffix {

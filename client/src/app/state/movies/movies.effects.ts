@@ -1,47 +1,42 @@
-import { EMovieTypes } from './../../shared/interfaces/interface';
 import { HttpService } from '../../shared/services/http.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of, zip } from 'rxjs';
+import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import {
-  loadMoviesAndTvShows,
-  loadMoviesTvFail,
-  loadMoviesTvShows,
-  loadMoviesTvSucc,
+  loadMovies,
+  loadMoviesFail,
+  loadMoviesSucc,
+  loadTvShows,
 } from './movies.actions';
 
 @Injectable()
 export class MovieEffects {
-  loadMoviesAndTvShows$ = createEffect(() =>
+  loadMovies$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadMoviesAndTvShows),
-      switchMap(({ moviePage, tvShowPage }) =>
+      ofType(loadMovies),
+      switchMap(() =>
         // Call the getMovies method, it returns an observable
-        zip([
-          this.http.getItems(moviePage, EMovieTypes.MOVIE),
-          this.http.getItems(tvShowPage, EMovieTypes.TV),
-        ]).pipe(
+        this.http.getMovies().pipe(
           // Take the returned value and return a new success action containing movies
-          map(([movies, tvShows]) =>
-            loadMoviesTvSucc({ movies: [...movies, ...tvShows] })
-          ),
+          map((movies) => loadMoviesSucc({ movies })),
           // Or... if it errors return a new failure action containing the error
-          catchError((error) => of(loadMoviesTvFail({ error })))
+          catchError((error) => of(loadMoviesFail({ error })))
         )
       )
     )
   );
-  loadMoviesTvShows$ = createEffect(() =>
+
+  loadTvShows$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadMoviesTvShows),
-      switchMap(({ page, itemType }) =>
-        // Call the getMovies method, it returns an observable
-        this.http.getItems(page, itemType).pipe(
-          // Take the returned value and return a new success action containing movies
-          map((movies) => loadMoviesTvSucc({ movies })),
+      ofType(loadTvShows),
+      switchMap(() =>
+        // Call the getTvShows method, it returns an observable
+        this.http.getTvShows().pipe(
+          // Take the returned value and return a new success action containing tvShows
+          map((movies) => loadMoviesSucc({ movies })),
           // Or... if it errors return a new failure action containing the error
-          catchError((error) => of(loadMoviesTvFail({ error })))
+          catchError((error) => of(loadMoviesFail({ error })))
         )
       )
     )
