@@ -37,11 +37,13 @@
       display: none;
     }
   }
-
   &__item {
     padding: 12px 16px;
   }
-  &__arrow {
-    margin-left: 8px;
+
+  &__items {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }

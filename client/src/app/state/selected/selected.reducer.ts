@@ -1,4 +1,9 @@
-import { loadSelect, loadSelectSucc, loadSelectFail } from './selected.actions';
+import {
+  loadSelect,
+  loadSelectSucc,
+  loadSelectFail,
+  removeSelect,
+} from './selected.actions';
 import {
   IMovieDetailsState,
   IMovieDetails,
@@ -27,5 +32,10 @@ export const selectReducer = createReducer(
     ...state,
     error,
     status: EStatuses.FAIL,
+  })),
+  on(removeSelect, (_state) => ({
+    selected: {} as IMovieDetails,
+    error: null,
+    status: EStatuses.PEND,
   }))
 );

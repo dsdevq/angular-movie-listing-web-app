@@ -1,76 +1,77 @@
-<section class="details" *ngIf="(status$ | async) === EStatus.SUCC; else loader">
-  <div class="details__container" *ngIf="(selectedItem$ | async) as item">
-    <div class="details__image background-image">
-      <img appLoadingImg loader="'../../../assets/loader.gif'" onErrorSrc="'../../../assets/error.png'"
-        class="background-image__image" [src]="item.backdrop_path" [alt]="item.title">
-      <article class="background-image__label">
-        <div>
-          <a class="background-image__link" routerLink="/">MaileHereko</a>
-          <span class="background-image__link"> / </span>
-          <a class="background-image__link" [routerLink]="'/' + (item.type | type:2 | url)">{{item.type | type:2}}</a>
-        </div>
-        <h2 class="background-image__header">{{item.title}}</h2>
-      </article>
-    </div>
-    <div class="details__content content-details">
-      <picture class="content-details__poster">
-        <img appLoadingImg loader="'../../../assets/loader.gif'" onErrorSrc="'../../../assets/error.png'"
-          [src]="item.poster_path" [alt]="item.title">
-      </picture>
-      <div class="content-details__information information-box">
-        <h3 class="information-box__overview">{{item.tagline || item.title}}</h3>
-        <p class="information-box__description">
-          {{item.overview}}
-        </p>
-        <div class="information-box__rating">
-          <app-rating>{{item.vote_average| number: '1.1-1'}}</app-rating>
-        </div>
-        <div [ngClass]="{'tv': item.type === EMovieType.TV}" class="information-box__additional-info info-add">
-          <div class="info-add__box">
-            <h5>Type</h5>
-            <p>{{item.type | type: 1}}</p>
+<section class="details">
+
+  <ng-container *ngIf="selectedItem$ | async as item">
+    <div class="details__container">
+      <div class="details__image background-image">
+        <img appLoadingImg errorSrc="../../../assets/bgPlaceholder.png" class="background-image__image"
+          [src]="item.backdrop_path" [alt]="item.title">
+        <article class="background-image__label">
+          <div class="background-image__box">
+            <a class="background-image__link" routerLink="/">MaileHereko</a>
+            <span class="background-image__link"> / </span>
+            <a class="background-image__link" [routerLink]="'/' + (item.type | type:2 | url)">{{item.type | type:2}}</a>
           </div>
-          <div class="info-add__box" *ngIf="item.release_date">
-            <h5>Release Date</h5>
-            <p>{{item.release_date}}</p>
+          <h2 class="background-image__header">{{item.title}}</h2>
+        </article>
+      </div>
+      <div class="details__content content-details">
+        <picture class="content-details__poster">
+          <img appLoadingImg errorSrc="../../../assets/bgPlaceholder.png" loader="../../../assets/bgPlaceholder.png"
+            [src]="item.poster_path" [alt]="item.title">
+        </picture>
+        <div class="content-details__information information-box">
+          <h3 class="information-box__overview">{{item.tagline || item.title}}</h3>
+          <p class="information-box__description">
+            {{item.overview}}
+          </p>
+          <div class="information-box__rating">
+            <app-rating>{{item.vote_average| number: '1.1-1'}}</app-rating>
           </div>
-          <div class="info-add__box" *ngIf="item.runtime">
-            <h5>Run time</h5>
-            <p>{{item.runtime}} min</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.status && item.type === EMovieType.TV">
-            <h5>Status</h5>
-            <p>{{item.status}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.first_air_date">
-            <h5>First air date</h5>
-            <p>{{item.first_air_date}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.last_air_date">
-            <h5>Last air date</h5>
-            <p>{{item.last_air_date}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.number_of_seasons">
-            <h5>No. of Seasons</h5>
-            <p>{{item.number_of_seasons}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item.number_of_episodes">
-            <h5>No. of episodes</h5>
-            <p>{{item.number_of_episodes}}</p>
-          </div>
-          <div class="info-add__box" *ngIf="item?.episode_run_time?.length">
-            <h5>Episode run time</h5>
-            <p>{{item.episode_run_time[0]}} min</p>
-          </div>
-          <div class="info-add__box">
-            <h5>Genres</h5>
-            <p>{{item.genres | genres }}</p>
+          <div [ngClass]="{'tv': item.type === EMovieType.TV}" class="information-box__additional-info info-add">
+            <div class="info-add__box">
+              <h5>Type</h5>
+              <p>{{item.type | type: 1}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.release_date">
+              <h5>Release Date</h5>
+              <p>{{item.release_date}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.runtime">
+              <h5>Run time</h5>
+              <p>{{item.runtime}} min</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.status && item.type === EMovieType.TV">
+              <h5>Status</h5>
+              <p>{{item.status}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.first_air_date">
+              <h5>First air date</h5>
+              <p>{{item.first_air_date}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.last_air_date">
+              <h5>Last air date</h5>
+              <p>{{item.last_air_date}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.number_of_seasons">
+              <h5>No. of Seasons</h5>
+              <p>{{item.number_of_seasons}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item.number_of_episodes">
+              <h5>No. of episodes</h5>
+              <p>{{item.number_of_episodes}}</p>
+            </div>
+            <div class="info-add__box" *ngIf="item?.episode_run_time?.length">
+              <h5>Episode run time</h5>
+              <p>{{item.episode_run_time[0]}} min</p>
+            </div>
+            <div class="info-add__box">
+              <h5>Genres</h5>
+              <p>{{item.genres | genres }}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
 </section>
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>

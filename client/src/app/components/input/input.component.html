@@ -1,6 +1,19 @@
-<mat-form-field color="primary" appearance="outline">
-  <mat-label>{{label}}</mat-label>
-  <mat-icon *ngIf="prefix" matPrefix>{{prefix}}</mat-icon>
-  <input toggle [type]="type" [placeholder]="placeholder" [(ngModel)]="value" matInput>
-  <mat-icon *ngIf="suffix" id="suffix" matSuffix>{{suffix}}</mat-icon>
-</mat-form-field>
+<!-- !REFACTOR -->
+<ng-container [ngSwitch]="true">
+
+
+  <mat-form-field color="primary" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <mat-icon *ngIf="prefix" matPrefix>{{prefix}}</mat-icon>
+    <input [(ngModel)]="value" autocomplete="false" [required]="ngControl.control?.hasError('required') || false"
+      [errorStateMatcher]="errorStateMatcher" toggle [type]="type" [placeholder]="placeholder" matInput>
+
+    <!-- !REF -->
+    <mat-error *ngSwitchCase="ngControl.control?.hasError('required')">Required field</mat-error>
+    <mat-error *ngSwitchCase="ngControl.control?.hasError('email')">Invalid email</mat-error>
+    <mat-error *ngSwitchCase="ngControl.control?.hasError('maxlength')">Max length -
+      {{ngControl.control?.errors?.['maxlength'].requiredLength}}</mat-error>
+
+    <mat-icon *ngIf="suffix" id="suffix" matSuffix>{{suffix}}</mat-icon>
+  </mat-form-field>
+</ng-container>

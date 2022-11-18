@@ -1,0 +1,21 @@
+<ul class="menu__list">
+  <li class="menu__item" *ngFor="let link of list$ | async">
+    <ng-container [ngSwitch]="link">
+      <a *ngSwitchCase="EPage.SUGGEST" [routerLink]="link | url" class="menu__link">
+        {{link}}
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+      <a *ngSwitchCase="EPagesAuthorized.LOGOUT" class="menu__link" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        {{link}}
+      </a>
+      <a *ngSwitchCase="EPage.LOGIN" [routerLink]="link | url" class="menu__link">
+        {{link}}
+        <mat-icon>login</mat-icon>
+      </a>
+      <a *ngSwitchDefault [routerLink]="link | url" class="menu__link">
+        {{link}}
+      </a>
+    </ng-container>
+  </li>
+</ul>

@@ -4,13 +4,12 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
-
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -18,12 +17,19 @@ export class AuthInterceptor implements HttpInterceptor {
     const idToken = localStorage.getItem('id_token');
 
     if (idToken) {
-      const cloned = req.clone({
+      req = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + idToken),
       });
-
-      return next.handle(cloned);
     }
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.error instanceof ErrorEvent) {
+          console.log('This is client side error');
+          throw new Error(error.error.message);
+        }
+        console.log('This is server side error');
+        throw new Error(error.error.message);
+      })
+    );
   }
 }

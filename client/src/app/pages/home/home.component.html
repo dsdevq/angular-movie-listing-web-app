@@ -1,6 +1,6 @@
 <section class="home">
-  <div class="home__container" *ngIf="movies$ | async as movies">
-    <ng-container *ngrxLet="movies | filter:(value$ | async) || '' as filtered">
+  <div class="home__container">
+    <ng-container *ngrxLet="movies$ | async | filter:(value$ | async) as filtered">
       <header class="home__header header-home">
         <section class="header-home__about about-home">
           <h1 class="about-home__heading">MaileHereko</h1>
@@ -18,15 +18,20 @@
             <span>
               {{tabLabel}}
             </span>
-            ({{filtered.length}})
+            ({{filtered?.length}})
           </mat-tab>
         </mat-tab-group>
 
       </header>
-      <app-movie-list [movies]="filtered"></app-movie-list>
+      <section class="movie-list">
+        <app-movie *ngFor="let movie of filtered" [movieProps]="movie"></app-movie>
+      </section>
       <div class="button__box">
         <app-button class="load-button" (click)="handleClick()">Load More</app-button>
       </div>
     </ng-container>
   </div>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
 </section>

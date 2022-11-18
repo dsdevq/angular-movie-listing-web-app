@@ -1,80 +1,72 @@
-import { EMovieTypes } from '../interfaces/interface';
-import { selectMoviesAndTvShows } from './../../state/movies/movies.selectors';
+import { EMovieTypes } from './../interfaces/interface';
+import { selectAllTvShows } from './../../state/movies/movies.selectors';
+import { IResponse } from '../interfaces/interface';
 import { Store } from '@ngrx/store';
 import { ENavItems, IAppState, IMovieDetails } from '../interfaces/interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, tap, catchError, throwError } from 'rxjs';
 import { IMovie, IMovieData } from '../interfaces/interface';
 import {
   selectAllMovies,
-  selectAllTvShows,
+  selectMoviesAndTvShows,
 } from 'src/app/state/movies/movies.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  private KEY: string = '04c35731a5ee918f014970082a0088b1';
-  private BASE_URL: string = 'https://api.themoviedb.org/3';
-  private IMAGE_URL: string = 'https://image.tmdb.org/t/p';
-  private POSTER_WIDTH: number = 500;
-  private BACKGROUND_WIDTH: number = 1280;
-  private ENavItem = ENavItems;
+  readonly KEY: string = '04c35731a5ee918f014970082a0088b1';
+  readonly BASE_URL: string = 'https://api.themoviedb.org/3';
+  readonly IMAGE_URL: string = 'https://image.tmdb.org/t/p';
+  readonly LOCAL_URL: string = 'http://localhost:5000/post';
+  readonly POSTER_WIDTH: number = 500;
+  readonly BACKGROUND_WIDTH: number = 1280;
 
-  // !!!!!!
-  private moviePage = 1;
-  private tvShowsPage = 1;
+  private _moviesPage: number = 1;
+
+  public get moviesPage(): number {
+    return this._moviesPage;
+  }
+  public set moviesPage(value: number) {
+    this._moviesPage = value;
+  }
+  private _tvShowsPage: number = 1;
+
+  public get tvShowsPage(): number {
+    return this._tvShowsPage;
+  }
+  public set tvShowsPage(value: number) {
+    this._tvShowsPage = value;
+  }
 
   constructor(private http: HttpClient, private store: Store<IAppState>) {}
 
-  private getImage = (width: number = 500, url: string | null): string => {
-    if (!url) {
-      return '';
-    }
-    return `${this.IMAGE_URL}/w${width}${url}`;
-  };
+  private getImage = (width: number = 500, url: string | null): string =>
+    (url && `${this.IMAGE_URL}/w${width}${url}`) || '';
 
-  public getMovies = (): Observable<IMovie[]> =>
+  public getItems = (page: number, type: string): Observable<IMovie[]> =>
     this.http
       .get<IMovieData>(
-        `${this.BASE_URL}/discover/movie?&api_key=${this.KEY}&page=${this.moviePage}`
+        `${this.BASE_URL}/discover/${type}?&api_key=${this.KEY}&page=${page}`
       )
       .pipe(
-        tap(() => {
-          this.moviePage += 1;
-        }),
-        map((result) =>
-          result.results.map((movie) => ({
-            ...movie,
-            suggested: false,
-            type: EMovieTypes.MOVIE,
-            poster_path: this.getImage(this.POSTER_WIDTH, movie.poster_path),
+        tap(() =>
+          type === EMovieTypes.MOVIE
+            ? (this.moviesPage += 1)
+            : (this.tvShowsPage += 1)
+        ),
+        map((items) =>
+          items.results.map((item) => ({
+            ...item,
+            title: item.name || item.title,
+            type,
+            poster_path: this.getImage(this.POSTER_WIDTH, item.poster_path),
           }))
         )
       );
 
-  public getTvShows = (): Observable<IMovie[]> =>
-    this.http
-      .get<IMovieData>(
-        `${this.BASE_URL}/tv/top_rated?&api_key=${this.KEY}&page=${this.tvShowsPage}`
-      )
-      .pipe(
-        tap(() => {
-          this.tvShowsPage += 1;
-        }),
-        map((result) =>
-          result.results.map((tv) => ({
-            ...tv,
-            title: tv.name,
-            suggested: false,
-            type: EMovieTypes.TV,
-            poster_path: this.getImage(this.POSTER_WIDTH, tv.poster_path),
-          }))
-        )
-      );
-
-  public getItem = (url: string): Observable<IMovieDetails> =>
+  public getItemDetails = (url: string): Observable<IMovieDetails> =>
     this.http
       .get<IMovieDetails>(`${this.BASE_URL}${url}?&api_key=${this.KEY}`)
       .pipe(
@@ -85,15 +77,20 @@ export class HttpService {
         }))
       );
 
-  // !!!
   public tabChange(value: string): Observable<IMovie[]> {
     switch (value) {
-      case this.ENavItem.MOVIES:
+      case ENavItems.MOVIES:
         return this.store.select(selectAllMovies);
-      case this.ENavItem.TV_SHOWS:
+      case ENavItems.TV_SHOWS:
         return this.store.select(selectAllTvShows);
       default:
         return this.store.select(selectMoviesAndTvShows);
     }
   }
+
+  public addItem = (movie: IMovie): Observable<IResponse> =>
+    this.http.post<IResponse>(`${this.LOCAL_URL}/movie`, movie);
+
+  public suggestItem = (movie: IMovie): Observable<IResponse> =>
+    this.http.post<IResponse>(`${this.LOCAL_URL}/suggest-someone`, movie);
 }

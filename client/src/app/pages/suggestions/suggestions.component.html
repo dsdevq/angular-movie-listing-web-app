@@ -3,9 +3,16 @@
     <h2 class="suggestions__heading">
       Suggestions
     </h2>
-    <ng-container *ngIf="movies$ | async as movies">
-      <app-movie-list [movies]="movies">
-      </app-movie-list>
+    <ng-container *ngIf="(movies$ | async)?.length; else noResults">
+      <section *ngrxLet="movies$ | async as movies" class="movie-list">
+        <app-movie *ngFor="let movie of movies" [movieProps]="movie" [isAddToList]="isAddToList"></app-movie>
+      </section>
     </ng-container>
+    <ng-template #noResults>
+      <app-no-items>
+        <h2 heading class="about-suggestions__heading">Sorry, No suggestions yet</h2>
+        <app-button button routerLink="/dashboard">Dashboard</app-button>
+      </app-no-items>
+    </ng-template>
   </div>
 </section>
