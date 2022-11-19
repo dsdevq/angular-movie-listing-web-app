@@ -24,6 +24,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    console.log('test');
+    console.log('test');
+    console.log('test');
     this.uiService.setSidenav(this.sidenav);
   }
 }
