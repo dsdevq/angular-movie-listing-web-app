@@ -26,12 +26,8 @@ export class UserEffects {
   userLogin$ = createEffect(() =>
     this.actions$.pipe(ofType(loginUser)).pipe(
       switchMap(({ email, password }) =>
-        // Call the getMovies method, it returns an observable
         this.authService.login(email, password).pipe(
-          // Take the returned value and return a new success action containing movies
           map((response) => loginUserSuccess({ data: response })),
-
-          // Or... if it errors return a new failure action containing the error
           catchError((error) => of(loginUserFailure({ error })))
         )
       )
@@ -40,12 +36,8 @@ export class UserEffects {
   userRegister$ = createEffect(() =>
     this.actions$.pipe(ofType(userRegister)).pipe(
       switchMap(({ username, email, password }) =>
-        // Call the getMovies method, it returns an observable
         this.authService.signUp(username, email, password).pipe(
-          // Take the returned value and return a new success action containing movies
           map(({ message }) => userRegisterSuccess({ message })),
-
-          // Or... if it errors return a new failure action containing the error
           catchError(({ message }) => {
             return of(userRegisterFailure({ message }));
           })
@@ -57,13 +49,9 @@ export class UserEffects {
   userAuth$ = createEffect(() =>
     this.actions$.pipe(ofType(authUser)).pipe(
       switchMap(() =>
-        // Call the getMovies method, it returns an observable
         this.authService.getUserData().pipe(
-          // Take the returned value and return a new success action containing movies
           map((response) => loginUserSuccess({ data: response })),
-
-          // Or... if it errors return a new failure action containing the error
-          catchError((error) => of(loginUserFailure({ error })))
+          catchError(({ message }) => of(loginUserFailure({ error: message })))
         )
       )
     )
@@ -72,12 +60,8 @@ export class UserEffects {
   addItem$ = createEffect(() =>
     this.actions$.pipe(ofType(addItem)).pipe(
       switchMap(({ item }) =>
-        // Call the getMovies method, it returns an observable
         this.httpService.addItem(item).pipe(
-          // Take the returned value and return a new success action containing movies
           map(() => addItemSuccess({ item })),
-
-          // Or... if it errors return a new failure action containing the error
           catchError((error) => of(addItemFailure({ error })))
         )
       )
@@ -87,7 +71,6 @@ export class UserEffects {
   addItemSucc$ = createEffect(() =>
     this.actions$.pipe(ofType(addItemSuccess)).pipe(
       map(({ item }) => addMovieTvShow({ id: item.id })),
-      // Or... if it errors return a new failure action containing the error
       catchError((error) => of(addItemFailure({ error })))
     )
   );
@@ -95,15 +78,12 @@ export class UserEffects {
   suggestSomeone$ = createEffect(() =>
     this.actions$.pipe(ofType(suggestItem)).pipe(
       switchMap(({ item }) =>
-        // Call the getMovies method, it returns an observable
         this.httpService.suggestItem(item).pipe(
-          // Take the returned value and return a new success action containing movies
           map(() =>
             this.authService.isLoggedIn()
               ? suggestItemSuccess({ item })
               : suggestItemSuccessNotLogged({ item })
           ),
-          // Or... if it errors return a new failure action containing the error
           catchError((error) => of(suggestItemFailure({ error })))
         )
       )
@@ -115,7 +95,6 @@ export class UserEffects {
       .pipe(ofType(suggestItemSuccess, suggestItemSuccessNotLogged))
       .pipe(
         map(({ item }) => suggestMovieTvShow({ id: item.id })),
-        // Or... if it errors return a new failure action containing the error
         catchError((error) => of(suggestItemFailure({ error })))
       )
   );

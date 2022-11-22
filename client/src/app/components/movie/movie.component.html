@@ -1,30 +1,42 @@
 <mat-card class="card" *ngIf="movieProps">
-  <div class="card__image">
-    <a [routerLink]="link">
-      <img mat-card-image errorSrc="../../../assets/bgPlaceholder.png" loader="../../../assets/bgPlaceholder.png"
-        [src]="movieProps.poster_path" [alt]="movieProps.title">
+  <div class="card__image" [ngClass]="{'loading': isLoading}">
+    <a [routerLink]="link" *skeleton="isLoading; maxWidth: '266px'; 
+    height: '100%'; ">
+      <img mat-card-image [src]="movieProps.poster_path" [alt]="movieProps.title">
     </a>
-    <app-rating class="card__rating">
-      {{movieProps.vote_average}}
-    </app-rating>
+
+    <div class="card__rating">
+      <app-rating *skeleton="isLoading; width: '60px'; darker: true; 
+      height: '32px'; ">
+        {{movieProps.vote_average}}
+      </app-rating>
+    </div>
   </div>
   <mat-card-content class="card__name">
-    <span class="card__title">
+    <span class="card__title" *skeleton="isLoading; width: '50%'">
       {{movieProps.title}}
     </span>
-    <ng-container>
 
-      <button *ngIf="isSuggest" [disabled]="movieProps.isManualSuggestion" (click)="handleClick(movieProps)"
-        [ngClass]="{'isSuggested': movieProps.isManualSuggestion}" class="card__suggest">
+    <ng-container *ngIf="isSuggest">
+
+      <button *skeleton="isLoading; width: '70%'" [disabled]="movieProps.isManualSuggestion"
+        (click)="handleClick(movieProps)" [ngClass]="{'isSuggested': movieProps.isManualSuggestion}"
+        class="card__suggest">
         <mat-icon>{{movieProps.isManualSuggestion ? 'check_circle' :'thumb_up' }}</mat-icon>
         {{ movieProps.isManualSuggestion ? 'Already suggested' : 'Suggest me' }}
       </button>
+    </ng-container>
 
-      <button *ngIf="isAddToList" (click)="handleClick(movieProps)" class="card__suggest">
-        <mat-icon> {{movieProps.isAdded ? 'close' : 'add'}}</mat-icon>
+    <ng-container *ngIf="isAddToList">
+      <button (click)="handleClick(movieProps)" class="card__suggest" *skeleton="isLoading; width: '70%'">
+        <mat-icon> {{movieProps.isAdded ?
+          'close' : 'add'}}
+        </mat-icon>
         {{ movieProps.isAdded ? 'Remove from list' : 'Add to my list' }}
       </button>
-
     </ng-container>
+
+
   </mat-card-content>
+
 </mat-card>

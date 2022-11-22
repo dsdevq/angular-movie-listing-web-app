@@ -20,17 +20,6 @@
   padding-bottom: 80px;
 }
 
-:host::ng-deep.search {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  :first-child {
-    grid-column: 1/4;
-  }
-  margin-bottom: 80px;
-  align-items: center;
-}
-
 .about-results {
   display: flex;
   flex-direction: column;

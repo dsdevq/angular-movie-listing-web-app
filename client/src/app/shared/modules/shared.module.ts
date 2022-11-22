@@ -17,6 +17,7 @@ import { TypePipe } from '../pipes/type.pipe';
 import { GenresPipe } from '../pipes/genres.pipe';
 import { ToggleDirective } from '../directives/toggle.directive';
 import { LoadingImgDirective } from '../directives/loading-img.directive';
+import { SkeletonDirective } from '../directives/skeleton/skeleton.directive';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
     TypePipe,
     ToggleDirective,
     LoadingImgDirective,
+    SkeletonDirective,
   ],
   exports: [
     CommonModule,

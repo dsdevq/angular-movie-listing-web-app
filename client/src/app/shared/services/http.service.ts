@@ -3,9 +3,9 @@ import { selectAllTvShows } from './../../state/movies/movies.selectors';
 import { IResponse } from '../interfaces/interface';
 import { Store } from '@ngrx/store';
 import { ENavItems, IAppState, IMovieDetails } from '../interfaces/interface';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap, catchError, throwError } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IMovie, IMovieData } from '../interfaces/interface';
 import {
   selectAllMovies,

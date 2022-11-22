@@ -3,6 +3,7 @@
 $background: #20283e;
 
 .card {
+  margin: 0 auto;
   max-width: 282px;
   height: 100%;
   background-color: $background;
@@ -10,6 +11,7 @@ $background: #20283e;
   display: flex;
   flex-direction: column;
   padding: 8px;
+
   .mat-card-content {
     flex: 1;
     height: 100%;
@@ -17,12 +19,14 @@ $background: #20283e;
     letter-spacing: 0.02em;
   }
   &__image {
+    border-radius: 8px;
     margin-bottom: 16px;
     position: relative;
     overflow: hidden;
     img {
       aspect-ratio: 2/3;
-      max-width: 500px;
+      object-fit: cover;
+      height: 100%;
       transition: 0.3s;
       width: 100%;
       margin: 0;
@@ -37,7 +41,6 @@ $background: #20283e;
     position: absolute;
   }
   &__name {
-    padding: 8px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -47,6 +50,7 @@ $background: #20283e;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.02em;
+    padding: 8px;
   }
   &__title {
     color: $grey-50;
@@ -74,4 +78,21 @@ button {
   &:disabled {
     cursor: default;
   }
+}
+
+.loading {
+  background-color: $grey-900;
+  height: 399px;
+  @media (max-width: 1024px) {
+    height: 321px;
+  }
+  @media (max-width: 768px) {
+    height: 324px;
+  }
+  @media (max-width: 425px) {
+    height: 418px;
+  }
+}
+.mat-icon {
+  max-width: 30px;
 }
