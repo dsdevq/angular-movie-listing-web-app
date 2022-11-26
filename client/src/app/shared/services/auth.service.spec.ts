@@ -81,7 +81,7 @@ describe('AuthService', () => {
       service
         .signUp(dummyCreds.email, dummyCreds.password, dummyCreds.username)
         .subscribe((response) => {
-          expect(response.message).toBeInstanceOf(String);
+          expect(response.message).toBe(dummyResponse.message);
         });
       const req = httpMock.expectOne(`${service.BASE_URL}/registration`);
       expect(req.request.method).toBe('POST');

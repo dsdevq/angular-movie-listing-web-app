@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
 export class MoviesComponent implements OnInit {
   public moviesInfo$: Observable<IMovie[]>;
   public EPages = EPages;
-  public isLogged$: Observable<boolean>;
 
   constructor(
     private store: Store<IAppState>,
@@ -29,7 +28,6 @@ export class MoviesComponent implements OnInit {
     this.initMovies();
   }
   private initMovies(): void {
-    this.isLogged$ = this.authService.isLoggedIn$;
     this.moviesInfo$ = this.store.select(
       this.authService.isLoggedIn() ? selectUserMovies : selectAllMovies
     );

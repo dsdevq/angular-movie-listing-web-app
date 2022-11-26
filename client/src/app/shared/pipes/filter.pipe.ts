@@ -5,15 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'filter',
 })
 export class FilterPipe implements PipeTransform {
-  transform = (
-    movies: IMovie[] | null,
-    searchString: string | null = ''
-  ): IMovie[] | null => {
-    if (movies === null) return movies;
-    return !searchString?.trim()
+  transform = (movies: IMovie[], searchString: string | null = ''): IMovie[] =>
+    !searchString?.trim()
       ? movies
       : movies.filter((movie) =>
           movie.title.toLowerCase().includes(searchString.toLowerCase())
         );
-  };
 }
