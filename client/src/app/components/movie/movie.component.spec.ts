@@ -57,13 +57,18 @@ describe('MovieComponent', () => {
     it('Should display suggest button if component.movieProps.isManualSuggestion false', () => {
       component.isSuggest = true;
       component.movieProps = {
+        type: 'movie',
+        id: 1,
         isManualSuggestion: false,
       } as IMovie;
       fixture.detectChanges();
-      let button: HTMLElement =
-        compiled.nativeElement.querySelector('.card__suggest');
-      let matIcon = button.children[0];
-      expect(matIcon.textContent).toContain('thumb_up');
+      let button: HTMLElement = fixture.debugElement.query(
+        By.css('.card__suggest')
+      ).nativeElement;
+      // let button: HTMLElement =
+      //   compiled.nativeElement.querySelector('.card__suggest');
+      // let matIcon = button.children[0];
+      // expect(matIcon.textContent).toContain('thumb_up');
       expect(button.classList).not.toContain('isSuggested');
       expect(button.textContent).toContain('Suggest me');
     });
@@ -76,6 +81,7 @@ describe('MovieComponent', () => {
       fixture.detectChanges();
       let button: HTMLElement =
         compiled.nativeElement.querySelector('.card__suggest');
+
       let matIcon = button.children[0];
 
       expect(matIcon.textContent).toContain('check_circle');
@@ -128,18 +134,17 @@ describe('MovieComponent', () => {
       expect(button.textContent).toContain('Add to my list');
     });
   });
+
   describe('routerLink', () => {
     it('should have a link to /movieProps.type/movieProps.id', () => {
       component.movieProps = {
         type: 'movie',
         id: 228,
       } as IMovie;
+      component.ngOnInit();
       fixture.detectChanges();
-      const { href } = fixture.debugElement.query(
-        By.directive(RouterLinkWithHref)
-      ).properties;
 
-      expect(href).toContain(
+      expect(component.link).toContain(
         `/${component.movieProps.type}/${component.movieProps.id}`
       );
     });

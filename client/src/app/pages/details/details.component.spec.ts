@@ -15,7 +15,6 @@ describe('DetailsComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
       declarations: [DetailsComponent],
-      // schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
     fixture = TestBed.createComponent(DetailsComponent);

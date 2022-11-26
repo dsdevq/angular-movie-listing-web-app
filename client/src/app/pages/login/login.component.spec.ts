@@ -1,4 +1,4 @@
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   ComponentFixture,
   waitForAsync,
@@ -20,8 +20,8 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [],
-      providers: [provideMockStore({ initialState }), FormBuilder],
+      imports: [ReactiveFormsModule],
+      providers: [provideMockStore({ initialState })],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(LoginComponent);

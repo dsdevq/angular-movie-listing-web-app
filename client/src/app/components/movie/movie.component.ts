@@ -13,19 +13,19 @@ export class MovieComponent implements OnInit {
 
   @Output() public addMovie = new EventEmitter();
   public link: string;
-  public isLoading: boolean;
+  public isLoading: boolean = false;
 
   ngOnInit(): void {
     this.initMovie();
+    // this.isLoading = false;
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 1000);
+    // setTimeout(() => {
+    // }, 1000);
   }
 
   private initMovie(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.link = `/${this.movieProps.type}/${this.movieProps.id}`;
   }
   public handleClick(movie: IMovie): void {

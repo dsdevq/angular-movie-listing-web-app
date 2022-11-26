@@ -41,7 +41,7 @@ export class SuggestMeComponent implements OnInit {
               let find = userItems.find((e: IMovie) => e.id === movie.id);
               return {
                 ...movie,
-                isManualSuggestion: find?.isManualSuggestion,
+                isManualSuggestion: find!.isManualSuggestion,
               };
             })
       )

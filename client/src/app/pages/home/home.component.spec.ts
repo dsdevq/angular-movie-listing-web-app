@@ -65,7 +65,7 @@ describe('HomeComponent', () => {
   });
 
   describe('handleTabChange', () => {
-    it('Should change Observable on tabChange', async () => {
+    it('Should change Observable on tabChange', () => {
       const dummyFormControl = new FormGroup({
         value: new FormControl(''),
       });
