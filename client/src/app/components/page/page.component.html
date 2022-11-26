@@ -1,19 +1,19 @@
 <section class="page">
   <div class="page__container">
-    <ng-container *ngrxLet="(movies | filter:(value$ | async) || '') as filtered">
+    <ng-container *ngrxLet="movies | filter:(value$ | async) as filtered">
       <header class="page__header header-page">
         <section class="header-page__about about-page">
           <a routerLink="/">MaileHereko</a>
           <h1 class="about-page__heading">{{heading}}</h1>
         </section>
-        <form class="about-page__form" *ngIf="filtered?.length" [formGroup]="inputValue">
+        <form class="about-page__form" *ngIf="filtered.length" [formGroup]="inputValue">
           <app-input [placeholder]="EInputSettings.PLACEHOLDER" [label]="EInputSettings.LABEL"
             [prefix]="EInputSettings.PREFIX" formControlName="value"></app-input>
         </form>
-        <p class="about-page__stats" *ngIf="filtered?.length">{{filtered?.length}} items</p>
+        <p class="about-page__stats" *ngIf="filtered.length">{{filtered.length}} items</p>
       </header>
 
-      <section *ngIf="filtered?.length; else noMovies" class="movie-list">
+      <section *ngIf="filtered.length; else noMovies" class="movie-list">
         <app-movie *ngFor="let movie of filtered" [movieProps]="movie"></app-movie>
       </section>
 
@@ -22,11 +22,11 @@
           <h2 heading class="about-page__heading">
             No {{heading}} yet.
           </h2>
-          <app-button button routerLink="/add">Add {{heading}}</app-button>
+          <app-button *ngIf="isLogged$ | async" button [routerLink]="EPagesAuth.ADD">Add {{heading}}</app-button>
         </app-no-items>
       </ng-template>
 
-      <ng-container *ngIf="!isLogged">
+      <ng-container *ngIf="!(isLogged$ | async)">
         <div class="button__box">
           <app-button class="load-button" (click)="handleClick()">Load More</app-button>
         </div>

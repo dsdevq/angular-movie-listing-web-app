@@ -16,7 +16,6 @@ import { selectUserTvShows } from 'src/app/state/user/user.selectors';
 })
 export class TvShowsComponent implements OnInit {
   public tvShowsInfo$: Observable<IMovie[]>;
-  public isLogged$: Observable<boolean>;
   public EPages = EPages;
 
   constructor(
@@ -30,7 +29,6 @@ export class TvShowsComponent implements OnInit {
   }
 
   private initTvShows(): void {
-    this.isLogged$ = this.authService.isLoggedIn$;
     this.tvShowsInfo$ = this.store.select(
       this.authService.isLoggedIn() ? selectUserTvShows : selectAllTvShows
     );

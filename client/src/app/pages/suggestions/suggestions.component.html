@@ -3,10 +3,12 @@
     <h2 class="suggestions__heading">
       Suggestions
     </h2>
-    <ng-container *ngIf="(movies$ | async)?.length; else noResults">
-      <section *ngrxLet="movies$ | async as movies" class="movie-list">
-        <app-movie *ngFor="let movie of movies" [movieProps]="movie" [isAddToList]="isAddToList"></app-movie>
-      </section>
+    <ng-container *ngrxLet="movies$ | async as movies">
+      <ng-container *ngIf="movies?.length; else noResults">
+        <section class="movie-list">
+          <app-movie *ngFor="let movie of movies" [movieProps]="movie" [isAddToList]="isAddToList"></app-movie>
+        </section>
+      </ng-container>
     </ng-container>
     <ng-template #noResults>
       <app-no-items>
