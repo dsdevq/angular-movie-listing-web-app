@@ -35,13 +35,13 @@ export class SuggestMeComponent implements OnInit {
 
     this.movies$ = combineLatest([items$, userItems$]).pipe(
       map(([items, userItems]) =>
-        !userItems
+        !userItems.length
           ? items
           : items.map((movie: IMovie) => {
               let find = userItems.find((e: IMovie) => e.id === movie.id);
               return {
                 ...movie,
-                isManualSuggestion: find!.isManualSuggestion,
+                isManualSuggestion: find?.isManualSuggestion,
               };
             })
       )

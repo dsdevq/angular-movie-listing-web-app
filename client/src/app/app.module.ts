@@ -28,6 +28,7 @@ import { Error404Component } from './pages/error404/error404.component';
 import { userReducer } from './state/user/user.reducer';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NavItemComponent } from './components/nav-items/nav-items.component';
+import { DialogPopupComponent } from './components/dialog-popup/dialog-popup.component';
 
 export const initializeApp =
   (appInitService: AppInitializerService): (() => void) =>
@@ -42,6 +43,7 @@ const tokenGetter = () => localStorage.getItem('id_token');
     HeaderComponent,
     Error404Component,
     NavItemComponent,
+    DialogPopupComponent,
   ],
   imports: [
     SharedModule,
