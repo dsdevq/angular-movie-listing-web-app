@@ -12,7 +12,7 @@
           [label]="EInputPassword.LABEL" [prefix]="EInputPassword.PREFIX" [suffix]="EInputPassword.SUFFIX">
         </app-input>
       </fieldset>
-      <app-button aria-disabled="true" class="form-sign-up__button">Sign Up</app-button>
+      <app-button [disabled]="form.valid" class="form-sign-up__button">Sign Up</app-button>
       <p *ngIf="status$ | async as status" class="form-sign-up__status">
         {{status.message}}
       </p>
