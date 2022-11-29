@@ -23,13 +23,3 @@ $width: 486px;
     }
   }
 }
-.form-login {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  &__fieldset {
-    display: inherit;
-    flex-direction: inherit;
-    gap: 16px;
-  }
-}

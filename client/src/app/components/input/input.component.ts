@@ -72,6 +72,7 @@ export class InputComponent implements ControlValueAccessor, Validator {
 
   public validate(control: AbstractControl<any, any>): ValidationErrors | null {
     this.control$.next(control);
+    console.log(control);
     return null;
   }
 }

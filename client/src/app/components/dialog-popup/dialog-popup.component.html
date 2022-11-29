@@ -1,1 +1,14 @@
-<p>dialog-popup works!</p>
+<mat-icon inline="true" mat-button mat-dialog-close>close</mat-icon>
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <h2 mat-dialog-title>Suggest something to watch</h2>
+  <fieldset>
+
+    <app-input formControlName="title" prefix="play_arrow" label="Title" placeholder="Enter title">
+    </app-input>
+    <app-input formControlName="link" prefix="link" label="Link" placeholder="Link (if available)">
+    </app-input>
+
+  </fieldset>
+  <app-button mat-button>Suggest</app-button>
+
+</form>

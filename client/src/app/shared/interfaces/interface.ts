@@ -41,6 +41,7 @@ export interface IMovie {
   release_date: string;
   runtime: string;
   genres: [];
+  link?: string;
 }
 
 export interface IMoviesState {

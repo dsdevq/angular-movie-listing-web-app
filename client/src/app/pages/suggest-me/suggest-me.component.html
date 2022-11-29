@@ -32,7 +32,7 @@
           me manually</p>
       </div>
       <div class="button__box" *ngIf="value">
-        <app-button class="load-button">Suggest Manually</app-button>
+        <app-button class="load-button" (click)="openDialog()">Suggest Manually</app-button>
       </div>
 
     </ng-container>

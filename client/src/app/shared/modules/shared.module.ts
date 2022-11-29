@@ -19,53 +19,34 @@ import { ToggleDirective } from '../directives/toggle.directive';
 import { LoadingImgDirective } from '../directives/loading-img.directive';
 import { SkeletonDirective } from '../directives/skeleton/skeleton.directive';
 
+const SharedComponents = [
+  PageComponent,
+  ButtonComponent,
+  InputComponent,
+  MovieComponent,
+  RatingComponent,
+  LoaderComponent,
+  NoItemsComponent,
+];
+
+const SharedPipes = [UrlPipe, TypePipe, GenresPipe, FilterPipe];
+
+const SharedDirectives = [
+  ToggleDirective,
+  LoadingImgDirective,
+  SkeletonDirective,
+];
+const SharedModules = [
+  CommonModule,
+  ReactiveFormsModule,
+  MaterialModule,
+  FormsModule,
+  LetModule,
+];
+
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FormsModule,
-    LetModule,
-    RouterModule,
-  ],
-  declarations: [
-    PageComponent,
-    ButtonComponent,
-    InputComponent,
-    MovieComponent,
-    RatingComponent,
-    LoaderComponent,
-    NoItemsComponent,
-
-    GenresPipe,
-    FilterPipe,
-    UrlPipe,
-    TypePipe,
-    ToggleDirective,
-    LoadingImgDirective,
-    SkeletonDirective,
-  ],
-  exports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FormsModule,
-    LetModule,
-
-    UrlPipe,
-    TypePipe,
-    GenresPipe,
-
-    RatingComponent,
-    PageComponent,
-    ButtonComponent,
-    MovieComponent,
-    InputComponent,
-    LoaderComponent,
-    FilterPipe,
-    ToggleDirective,
-    LoadingImgDirective,
-    NoItemsComponent,
-  ],
+  imports: [SharedModules, RouterModule],
+  declarations: [SharedComponents, SharedPipes, SharedDirectives],
+  exports: [SharedModules, SharedPipes, SharedDirectives, SharedComponents],
 })
 export class SharedModule {}
