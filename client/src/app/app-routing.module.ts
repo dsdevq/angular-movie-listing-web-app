@@ -1,6 +1,7 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { Error404Component } from './pages/error404/error404.component';
 
-import { NgModule } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth.guard';
 
@@ -39,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: 'suggestions',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
+    canActivate: [() => inject(AuthService).isLoggedIn$],
     loadChildren: () =>
       import('./pages/suggestions/suggestions.module').then(
         (m) => m.SuggestionsModule
