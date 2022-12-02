@@ -15,10 +15,14 @@ import {
 } from '../../shared/interfaces/interface';
 import { HttpService } from '../../shared/services/http.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable, take } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 
 @Component({
+  standalone: true,
+  imports: [SharedModule, RouterModule],
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],

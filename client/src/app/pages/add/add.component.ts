@@ -1,9 +1,10 @@
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 import { UiDataService } from './../../shared/services/ui-data.service';
 import { selectUserTvShows } from 'src/app/state/user/user.selectors';
 import { selectUserMovies } from './../../state/user/user.selectors';
 import { addItem } from './../../state/user/user.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, Observable, switchMap, zip } from 'rxjs';
 import {
@@ -14,6 +15,8 @@ import {
 import { selectMoviesAndTvShows } from 'src/app/state/movies/movies.selectors';
 
 @Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, SharedModule],
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],

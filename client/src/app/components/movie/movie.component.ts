@@ -1,7 +1,22 @@
+import { SkeletonDirective } from './../../shared/directives/skeleton/skeleton.directive';
+import { MatIconModule } from '@angular/material/icon';
+import { RatingComponent } from './../rating/rating.component';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { IMovie } from 'src/app/shared/interfaces/interface';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    SkeletonDirective,
+    MatIconModule,
+    RouterModule,
+    RatingComponent,
+  ],
   selector: 'app-movie',
   templateUrl: './movie.component.html',
   styleUrls: ['./movie.component.scss'],

@@ -20,22 +20,16 @@ import { LoadingImgDirective } from '../directives/loading-img.directive';
 import { SkeletonDirective } from '../directives/skeleton/skeleton.directive';
 
 const SharedComponents = [
-  PageComponent,
   ButtonComponent,
-  InputComponent,
-  MovieComponent,
-  RatingComponent,
   LoaderComponent,
   NoItemsComponent,
+  InputComponent,
+  PageComponent,
 ];
 
 const SharedPipes = [UrlPipe, TypePipe, GenresPipe, FilterPipe];
 
-const SharedDirectives = [
-  ToggleDirective,
-  LoadingImgDirective,
-  SkeletonDirective,
-];
+const SharedDirectives = [ToggleDirective, LoadingImgDirective];
 const SharedModules = [
   CommonModule,
   ReactiveFormsModule,
@@ -45,8 +39,21 @@ const SharedModules = [
 ];
 
 @NgModule({
-  imports: [SharedModules, RouterModule],
+  imports: [
+    SharedModules,
+    RouterModule,
+    MovieComponent,
+    RatingComponent,
+    SkeletonDirective,
+  ],
   declarations: [SharedComponents, SharedPipes, SharedDirectives],
-  exports: [SharedModules, SharedPipes, SharedDirectives, SharedComponents],
+  exports: [
+    SharedModules,
+    SharedPipes,
+    SharedDirectives,
+    SharedComponents,
+    MovieComponent,
+    RatingComponent,
+  ],
 })
 export class SharedModule {}

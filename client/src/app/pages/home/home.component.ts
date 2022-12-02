@@ -17,8 +17,11 @@ import {
 } from 'src/app/shared/interfaces/interface';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 
 @Component({
+  standalone: true,
+  imports: [SharedModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

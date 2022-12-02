@@ -1,3 +1,5 @@
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import {
   AbstractControl,
@@ -7,6 +9,7 @@ import {
   Validator,
   FormControl,
   NG_VALIDATORS,
+  FormsModule,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { BehaviorSubject } from 'rxjs';
@@ -58,21 +61,18 @@ export class InputComponent implements ControlValueAccessor, Validator {
 
   public onChange(_: any): void {}
 
-  onValidationChange = () => {};
-
   public writeValue(value: string): void {
     this.value = value;
   }
 
-  public registerOnChange(fn: any): void {
-    this.onChange = fn;
+  public registerOnChange(onChange: any): void {
+    this.onChange = onChange;
   }
 
   public registerOnTouched(): void {}
 
   public validate(control: AbstractControl<any, any>): ValidationErrors | null {
     this.control$.next(control);
-    console.log(control);
     return null;
   }
 }

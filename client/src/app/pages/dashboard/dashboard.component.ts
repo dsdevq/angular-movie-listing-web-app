@@ -1,3 +1,6 @@
+import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
+import { CommonModule } from '@angular/common';
 import {
   IUser,
   EPagesAuthorized,
@@ -10,6 +13,8 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, SharedModule, RouterModule],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],

@@ -8,13 +8,13 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomeModule),
+    loadComponent: () =>
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'movies',
-    loadChildren: () =>
-      import('./pages/movies/movies.module').then((m) => m.MoviesModule),
+    loadComponent: () =>
+      import('./pages/movies/movies.component').then((m) => m.MoviesComponent),
   },
   {
     path: 'tv-shows',
@@ -23,8 +23,10 @@ const routes: Routes = [
   },
   {
     path: ':type/:id',
-    loadChildren: () =>
-      import('./pages/details/details.module').then((m) => m.DetailsModule),
+    loadComponent: () =>
+      import('./pages/details/details.component').then(
+        (m) => m.DetailsComponent
+      ),
   },
   {
     path: 'suggest-me',
@@ -35,12 +37,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () =>
-      import('./pages/login/login.module').then((m) => m.LoginModule),
+    loadComponent: () =>
+      import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'suggestions',
-    // canActivate: [AuthGuard],
     canActivate: [() => inject(AuthService).isLoggedIn$],
     loadChildren: () =>
       import('./pages/suggestions/suggestions.module').then(
@@ -50,21 +51,23 @@ const routes: Routes = [
   {
     path: 'add',
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./pages/add/add.module').then((m) => m.AddModule),
+    loadComponent: () =>
+      import('./pages/add/add.component').then((m) => m.AddComponent),
   },
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./pages/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
       ),
   },
   {
     path: 'sign-up',
     loadChildren: () =>
-      import('./pages/sign-up/sign-up.module').then((m) => m.SignUpModule),
+      import('./pages/sign-up/sign-up.component').then(
+        (m) => m.SignUpComponent
+      ),
   },
   { path: '**', component: Error404Component },
 ];

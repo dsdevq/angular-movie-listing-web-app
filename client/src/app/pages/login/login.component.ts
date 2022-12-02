@@ -10,8 +10,10 @@ import {
   FormControl,
   FormGroup,
   NonNullableFormBuilder,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 
 interface ILoginCreds {
   email: FormControl<string>;
@@ -19,6 +21,8 @@ interface ILoginCreds {
 }
 
 @Component({
+  standalone: true,
+  imports: [SharedModule, ReactiveFormsModule],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
